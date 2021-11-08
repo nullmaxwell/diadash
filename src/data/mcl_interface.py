@@ -22,7 +22,7 @@ class MCL_Interface:
     # Class Attributes
     TIMEOUT = 40  # in seconds
     OPTIONS = FirefoxOptions()
-    # OPTIONS.headless = True # Makes the process run headless.
+    OPTIONS.headless = True  # Makes the process run headless.
     OPTIONS.set_preference("browser.download.folderList", 2)
     OPTIONS.set_preference("browser.download.manager.showWhenStarting", False)
     OPTIONS.set_preference("browser.download.dir", DATA_OUT_PATH)
