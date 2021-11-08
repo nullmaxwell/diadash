@@ -14,7 +14,7 @@ from src.credentials.credentials import CredentialHandler
 
 class MCL_Interface:
     """
-    Handlles all of the web navigation necessary to donwload the reports.
+    Handles all of the web navigation necessary to download the reports.
     """
 
     DATA_OUT_PATH = str(pathlib.Path("data/external").resolve())
