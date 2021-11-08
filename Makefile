@@ -99,7 +99,7 @@ remove_environment:
 
 ## Tests python source code
 test_src:
-	pytest tests/*
+	pytest tests/* --tb=line --no-header -vv
 
 ## Test with Coverage without HTML report.
 coverage:
