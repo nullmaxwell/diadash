@@ -69,13 +69,7 @@ class MCL_Interface:
         """
         Navigates to the reports page and downloads the appropriate data.
         """
-        # Navigating to the reports page.
-        # self.driver.get(
-        #     "https://carelink.minimed.com/app/reports"
-        # )  # old call --> this raises compat error
-
         self.driver.implicitly_wait(5)
-        # self.driver.find_element(By.LINK_TEXT, "Reports").click()
 
         report_element = self.driver.find_element(By.ID, "h-reports")
         self.driver.execute_script("arguments[0].click();", report_element)
