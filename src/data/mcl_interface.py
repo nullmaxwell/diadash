@@ -105,6 +105,17 @@ class MCL_Interface:
     def clickableWaitAndClick(self, element_type: any, element: str) -> None:
         """
         Waits until a given element is clickable before clicking it.
+
+        ## Parameters:
+        `element_type` any:
+            What is the type of element you are going going to wait for?
+            i.e. `By.ID`, `By.XPATH`, `By.CSS_SELECTOR`, etc
+
+        `element` str:
+            Identifying string corresponding to the type specified in `element_type`.
+
+        ## Returns
+        None
         """
         try:
             WebDriverWait(self.driver, MCL_Interface.TIMEOUT).until(
@@ -117,6 +128,17 @@ class MCL_Interface:
     def presenceWaitAndClick(self, element_type: any, element: str) -> None:
         """
         Waits until a given element is present before clicking it.
+
+        ## Parameters:
+        `element_type` any:
+            What is the type of element you are going going to wait for?
+            i.e. `By.ID`, `By.XPATH`, `By.CSS_SELECTOR`, etc
+
+        `element` str:
+            Identifying string corresponding to the type specified in `element_type`.
+
+        ## Returns
+        None
         """
         try:
             WebDriverWait(self.driver, MCL_Interface.TIMEOUT).until(
