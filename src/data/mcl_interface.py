@@ -38,7 +38,6 @@ class MCL_Interface:
         self.creds = CredentialHandler()
         self.user = self.creds.getUser()
         self.token = self.creds.getToken()
-        # self.driver = webdriver.Firefox(firefox_profile=MCL_Interface.PROFILE)
         self.driver = webdriver.Firefox(options=MCL_Interface.OPTIONS)
         pass
 
