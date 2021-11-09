@@ -37,3 +37,37 @@ class WeeklyDataPipeline:
 
         del df
         return ret_dict
+
+    def scrubFeatures(chunk_dict: dict = sectionalizeData):
+        """
+        Removes unnecessary columns from chunks.
+
+        ## Parameters
+        `chunk_dict`: dict
+            dictionary of chunks post-slicing
+
+        ## Returns
+        `chunk_dict: dict
+            Dictionary of DataFrames with the appropriate features removed.
+        """
+        # Chunk 1
+        chunk_dict["chunk1"] = chunk_dict["chunk1"][
+            ["Index", "Date", "Time", "Bolus Volume Delivered (U)"]
+        ]
+
+        # Chunk2
+        chunk_dict["chunk2"] = None
+
+        # Chunk3
+        chunk_dict["chunk3"] = chunk_dict["chunk3"][
+            ["Index", "Date", "Time", "Sensor Glucose (mg/dL)"]
+        ]
+
+        return chunk_dict
+
+    def pipe():
+        """
+        Placeholder Pipeline function.
+        """
+        print()
+        pass
