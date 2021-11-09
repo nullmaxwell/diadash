@@ -1,42 +1,68 @@
 import pytest
-from src.pipelines.pipelines import WeeklyReportPipeline
+from src.pipelines.pipelines import WeeklyDataPipeline
 
-
-@pytest.fixture
+# The following tests verify the WeeklyDataPipeline and its components.
 @pytest.mark.order(1)
 def test_readData():
     """
     Verifies that the source CSV can be read in as a DataFrame
     """
     try:
-        df = WeeklyReportPipeline.readData()
+        df = WeeklyDataPipeline.readData()
         return df
     except:
         print(">>> readData failed. Raising Exception")
         raise
 
 
-@pytest.fixture
 @pytest.mark.order(2)
-def test_sliceWeeklyReport(test_readData):
+def test_sectionalizeData(test_readData):
     """
     Verifies that the weekly report is split correctly.
     """
-    test_dict = WeeklyReportPipeline.sliceWeeklyReport(test_readData)
-    assert len(test_dict) == 3, "test_dict length is incorrect."
+    test_dict = WeeklyDataPipeline.sectionalizeData(test_readData)
+    assert len(test_dict) == 3, "test_dict length post-sectionalizing is incorrect."
     return test_dict
 
 
-def test_sliceWeeklyReportLengths(test_sliceWeeklyReport):
+@pytest.mark.order(3)
+def test_sectionalizeDataLengths(test_sectionalizeData):
     """
     Verifies the length of the testing data.
     """
     assert (
-        len(test_sliceWeeklyReport["chunk1"]) > 100
+        len(test_sectionalizeData["chunk1"]) > 100
     ), "chunk1 does not meet length requirement."
     assert (
-        len(test_sliceWeeklyReport["chunk2"]) > 100
+        len(test_sectionalizeData["chunk2"]) > 100
     ), "chunk2 does not meet length requirement."
     assert (
-        len(test_sliceWeeklyReport["chunk3"]) > 100
+        len(test_sectionalizeData["chunk3"]) > 100
     ), "chunk3 does not meet length requirement."
+
+
+@pytest.mark.order(4)
+def test_scrubFeatures(test_sectionalizeData):
+    """
+    Verifies that only the necessary features for each chunk are present.
+    """
+    try:
+        WeeklyDataPipeline.scrubFeatures(test_sectionalizeData)
+    except:
+        print(">>> Error scrubbing features. Rasing exception.")
+        raise
+    finally:
+        assert (
+            test_sectionalizeData["chunk1"]
+            == ["Index", "Date", "Time", "Bolus Volume Delivered (U)"]
+        ).all(), "Chunk1 contains unwanted indexes."
+
+        assert (
+            type(test_sectionalizeData["chunk1"]) == None
+        ), "Chunk2 incorrectly deleted."
+
+        assert (
+            test_sectionalizeData["chunk3"]
+            == ["Index", "Date", "Time", "Sensor Glucose (mg/dL)"]
+        ).all(), "Chunk3 contains unwanted indexes."
+    pass

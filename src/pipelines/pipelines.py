@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-class WeeklyReportPipeline:
+class WeeklyDataPipeline:
     """
     Pipeline dedicated to generating and cleaning the CSV data sourced from the MCL interface.
     """
@@ -13,7 +13,7 @@ class WeeklyReportPipeline:
         """
         return pd.read_csv(filename, header=4)
 
-    def sliceWeeklyReport(df: pd.DataFrame = readData) -> dict:
+    def sectionalizeData(df: pd.DataFrame = readData) -> dict:
         """
         Slices a dataframe into 3 smaller DataFrames by index
 

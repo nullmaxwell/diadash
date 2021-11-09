@@ -1,5 +1,4 @@
 import pytest
-
 from src.data.mcl_interface import MCL_Interface
 
 
