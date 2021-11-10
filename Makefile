@@ -117,7 +117,7 @@ coverage-html:
 
 ## Sample Commond
 dash:
-	$(PYTHON_INTERPRETER) src/dash/dash.py
+	$(PYTHON_INTERPRETER) src/dash/app.py
 
 #################################################################################
 # Project Rules                                                                 #
