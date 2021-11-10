@@ -4,6 +4,12 @@ import pandas as pd
 class WeeklyDataPipeline:
     """
     Pipeline dedicated to generating and cleaning the CSV data sourced from the MCL interface.
+
+    WeeklyDataPipeline.pipe() performs the following methods in order:
+    Proc 1: readData
+    Proc 2: sectionalizeData
+    Proc 3: scrubFeatures
+    Proc 4: castFeatures
     """
 
     def readData(filename: str = "data/external/mcl_raw_data.csv"):
