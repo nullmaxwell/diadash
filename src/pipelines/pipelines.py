@@ -71,6 +71,37 @@ class WeeklyDataPipeline:
 
         return chunk_dict
 
+    def castFeatures(chunk_dict: dict) -> dict:
+        """
+        Casts to appropriate type and re-sorts data.
+
+        ## Parameters:
+        `chunk_dict`: dict
+            dictionary of chunks post-feature scrubbing
+
+        ## Returns:
+        `chunk_dict: dict
+            Dictionary of DataFrames with features casted and re-sorted.
+        """
+        # Converting the Index, Date, and Time for chunks 1 and 3
+        for _ in ["chunk1", "chunk3"]:
+            chunk_dict[_]["Index"] = chunk_dict[_]["Index"].astype("float32")
+            chunk_dict[_]["Date"] = pd.to_datetime(chunk_dict[_]["Date"])
+            chunk_dict[_]["Time"] = pd.to_datetime(chunk_dict[_]["Time"]).apply(
+                lambda x: x.time()
+            )
+
+        for _ in ["Bolus Volume Delivered (U)", "Basal Rate (U/h)"]:
+            chunk_dict["chunk1"][_] = chunk_dict["chunk1"][_].astype("float32")
+
+        # Chunk2 -- Nothing to do as of now
+
+        # Chunk3 --
+        chunk_dict["chunk3"]["Sensor Glucose (mg/dL)"] = chunk_dict["chunk3"][
+            "Sensor Glucose (mg/dL)"
+        ].astype("float32")
+
+        return chunk_dict
     def pipe():
         """
         Placeholder Pipeline function.
