@@ -12,14 +12,14 @@ class WeeklyDataPipeline:
     Proc 4: castFeatures
     """
 
-    def readData(filename: str = "data/external/mcl_raw_data.csv"):
+    def readData(filename: str = "data/external/mcl_raw_data.csv") -> pd.DataFrame:
         """
         Reads the updated Medtronic CareLink data export.
         Header set to 4 to offset the other headers on the file.
         """
         return pd.read_csv(filename, header=4)
 
-    def sectionalizeData(df: pd.DataFrame = readData) -> dict:
+    def sectionalizeData(df: pd.DataFrame) -> dict:
         """
         Slices a dataframe into 3 smaller DataFrames by index
 
@@ -44,7 +44,7 @@ class WeeklyDataPipeline:
         del df
         return ret_dict
 
-    def scrubFeatures(chunk_dict: dict = sectionalizeData):
+    def scrubFeatures(chunk_dict: dict) -> dict:
         """
         Removes unnecessary columns from chunks.
 
