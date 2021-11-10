@@ -102,9 +102,13 @@ class WeeklyDataPipeline:
         ].astype("float32")
 
         return chunk_dict
+
     def pipe():
         """
         Placeholder Pipeline function.
         """
-        print()
-        pass
+        raw_data = WeeklyDataPipeline.readData()
+        data_dict = WeeklyDataPipeline.sectionalizeData(raw_data)
+        data_dict = WeeklyDataPipeline.scrubFeatures(data_dict)
+        data_dict = WeeklyDataPipeline.castFeatures(data_dict)
+        return data_dict
