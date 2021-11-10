@@ -54,7 +54,13 @@ def test_scrubFeatures(test_sectionalizeData):
     finally:
         assert (
             test_sectionalizeData["chunk1"]
-            == ["Index", "Date", "Time", "Bolus Volume Delivered (U)"]
+            == [
+                "Index",
+                "Date",
+                "Time",
+                "Bolus Volume Delivered (U)",
+                "Basal Rate (U/h)",
+            ]
         ).all(), "Chunk1 contains unwanted indexes."
 
         assert (

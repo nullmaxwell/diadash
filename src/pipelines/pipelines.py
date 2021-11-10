@@ -52,7 +52,7 @@ class WeeklyDataPipeline:
         """
         # Chunk 1
         chunk_dict["chunk1"] = chunk_dict["chunk1"][
-            ["Index", "Date", "Time", "Bolus Volume Delivered (U)"]
+            ["Index", "Date", "Time", "Bolus Volume Delivered (U)", "Basal Rate (U/h)"]
         ]
 
         # Chunk2
