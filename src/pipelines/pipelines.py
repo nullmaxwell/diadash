@@ -61,8 +61,8 @@ class WeeklyDataPipeline:
             ["Index", "Date", "Time", "Bolus Volume Delivered (U)", "Basal Rate (U/h)"]
         ]
 
-        # Chunk2
-        chunk_dict["chunk2"] = None
+        # Chunk2 -- removed for space saving, currently does not have a use. (may change in future)
+        del chunk_dict["chunk2"]
 
         # Chunk3
         chunk_dict["chunk3"] = chunk_dict["chunk3"][
