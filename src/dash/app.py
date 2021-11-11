@@ -5,13 +5,21 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+from src.dash.assets.components import *
 import plotly.express as px
 import pandas as pd
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(
+    __name__,
+    # assets_url_path="src/dash/assets/"
+    external_stylesheets=[dbc.themes.MORPH],
+)
+
+app.title = "DiaDash"
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
+
 df = pd.DataFrame(
     {
         "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
