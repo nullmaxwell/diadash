@@ -283,16 +283,14 @@ class sidebarContainer:
             ]
         )
 
-        row4 = dbc.Row(
-            [
-                sidebarContainer.createCard("Metric", "Value"),
-                sidebarContainer.createCard("Metric", "Value"),
-            ]
-        )
+        # row4 = dbc.Row(
+        #     [
+        #         sidebarContainer.createCard("Metric", "Value"),
+        #         sidebarContainer.createCard("Metric", "Value"),
+        #     ]
+        # )
 
-        grid = html.Div(
-            [html.Br(), row1, html.Br(), row2, html.Br(), row3, html.Br(), row4]
-        )
+        grid = html.Div([html.Br(), row1, html.Br(), row2, html.Br(), row3, html.Br()])
         return grid
 
 
