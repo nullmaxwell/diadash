@@ -102,10 +102,7 @@ class mainContainer:
         """
         return dbc.Col(
             id="main-container",
-            children=[
-                mainContainer.getButtonGroup(),
-                mainContainer.getMainPlot(),
-            ],
+            children=[mainContainer.getButtonGroup()],
             width=8,
         )
 
@@ -146,12 +143,12 @@ class mainContainer:
         if value == 1:
             return mainContainer.getWeeklyView()
         elif value == 2:
-            return mainContainer.getDailyPlot()
+            return mainContainer.getDailyView()
         elif value == 3:
             return mainContainer.unknownView()
         pass
 
-    def getMainPlot() -> any:
+    def getTestPlot() -> any:
         """
         Defines and returns the div containing a basic plot for the time being.
 
@@ -182,7 +179,7 @@ class mainContainer:
         Defines and returns the weekly view of the plot.
         """
 
-        tab1_content = mainContainer.getMainPlot()
+        tab1_content = mainContainer.getTestPlot()
         tab2_content = None
         tab3_content = None
 
