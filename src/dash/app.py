@@ -23,10 +23,8 @@ app.title = "DiaDash"
 
 # ---------------------------------------------------------------------------------------
 
-# ASSET_PATH = "src/dash/assets/images/"
-
 """
-This file contains all of the components used within the dashboard.
+Below contains all of the components used within the dashboard.
 Each class is organized as follows:
 
 class <MajorDivName>:
@@ -36,23 +34,16 @@ class <MajorDivName>:
 """
 
 
-class mainContainer:
+class generalComponents:
     """
-    Class housing all of the items to be stored within the main container.
+    Class housing all of the general components.
     """
 
     def serve() -> any:
         """
-        Defines and returns the container in which everything is housed.
+        Gets all of the general components and returns them as a list.
         """
-        return html.Div(
-            id="main-container",
-            children=[
-                mainContainer.getNavBar(),
-                mainContainer.getButtonGroup(),
-                mainContainer.getMainPlot(),
-            ],
-        )
+        return generalComponents.getNavBar()
 
     def getNavBar() -> any:
         """
