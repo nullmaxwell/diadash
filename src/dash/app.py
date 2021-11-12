@@ -90,6 +90,25 @@ class generalComponents:
         )
         return navbar
 
+
+class mainContainer:
+    """
+    Class housing all of the items to be stored within the main container.
+    """
+
+    def serve() -> any:
+        """
+        Defines and returns the container in which everything is housed.
+        """
+        return dbc.Col(
+            id="main-container",
+            children=[
+                mainContainer.getButtonGroup(),
+                mainContainer.getMainPlot(),
+            ],
+            width=8,
+        )
+
     def getButtonGroup() -> any:
         """
         Defines and returns the row of buttons that control which graph is shown.
