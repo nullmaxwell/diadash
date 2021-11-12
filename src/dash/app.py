@@ -206,7 +206,84 @@ class sidebarContainer:
         """
         Defines and returns the left container that contains the main graph and basic options.
         """
-        return html.Div(id="sidebar", children=[])
+        return dbc.Col(
+            id="sidebar-container",
+            children=[sidebarContainer.getCardGrid()],
+            width=4,
+            style={"border-left": "black"},
+        )
+
+    def getSidebarHeader() -> any:
+        """
+        Defines and returns a header with some basic text explanation.
+        """
+
+        pass
+
+    def createCard(header: str, value: str) -> any:
+        """
+        Wrapper function that defines the content of a card
+        based on a value and provided header.
+        """
+        content = [
+            dbc.CardHeader(header),
+            dbc.CardBody(
+                [
+                    html.P(
+                        value,
+                        className="card-body align-items-center d-flex justify-content-center",
+                    )
+                ]
+            ),
+        ]
+
+        card = dbc.Col(
+            dbc.Card(
+                content,
+                color="secondary",
+                outline=True,
+                className="card-body align-items-center d-flex justify-content-center",
+            )
+        )
+
+        return card
+
+    def getCardGrid() -> any:
+        """
+        Defines and returns a grid of cards to display stats on.
+        """
+        row1 = dbc.Row(
+            [
+                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Metric", "Value"),
+            ]
+        )
+
+        row2 = dbc.Row(
+            [
+                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Metric", "Value"),
+            ]
+        )
+
+        row3 = dbc.Row(
+            [
+                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Metric", "Value"),
+            ]
+        )
+
+        row4 = dbc.Row(
+            [
+                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Metric", "Value"),
+            ]
+        )
+
+        grid = html.Div(
+            [html.Br(), row1, html.Br(), row2, html.Br(), row3, html.Br(), row4]
+        )
+        return grid
 
 
 # ---------------------------------------------------------------------------------------
@@ -216,11 +293,16 @@ def serve_layout() -> list:
     """
     Returns layout containing components back to the app.
     """
-    return [mainContainer.serve(), sidebarContainer.serve()]
+    return [
+        generalComponents.getNavBar(),
+        dbc.Row(
+            [
+                mainContainer.serve(),
+                sidebarContainer.serve(),
+            ]
+        ),
+    ]
 
-
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
 
 app.layout = dbc.Container(children=serve_layout())
 
