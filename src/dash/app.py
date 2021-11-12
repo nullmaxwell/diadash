@@ -15,7 +15,7 @@ import pandas as pd
 
 app = dash.Dash(
     __name__,
-    # assets_url_path="src/dash/assets/"
+    assets_url_path="src/dash/assets",
     external_stylesheets=[dbc.themes.MORPH],
 )
 
@@ -23,7 +23,7 @@ app.title = "DiaDash"
 
 # ---------------------------------------------------------------------------------------
 
-ASSET_PATH = "src/dash/assets/images"
+# ASSET_PATH = "src/dash/assets/images/"
 
 """
 This file contains all of the components used within the dashboard.
@@ -48,27 +48,56 @@ class mainContainer:
         return html.Div(
             id="main-container",
             children=[
-                mainContainer.getBanner(),
+                mainContainer.getNavBar(),
                 mainContainer.getButtonGroup(),
+                mainContainer.getMainPlot(),
             ],
         )
 
-    def getBanner() -> any:
+    def getNavBar() -> any:
         """
-        Defines and returns the banner div and its child components.
+        Defines and returns the NavBar of the dashboard.
         """
-        return html.Div(
-            id="banner",
-            children=[
-                html.Img(
-                    id="logo",
-                    src=app.get_asset_url(
-                        ASSET_PATH + "space_dashboard_black_48dp.svg"
+        navbar = dbc.Navbar(
+            dbc.Container(
+                [
+                    html.A(
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    html.Img(
+                                        id="navbar-logo",
+                                        src=app.get_asset_url(
+                                            "images/space_dashboard_black_48dp.svg"
+                                        ),
+                                    ),
+                                    width=2,
+                                ),
+                                dbc.Col(
+                                    dbc.NavbarBrand(
+                                        "DiaDash Application", className="ms-2"
+                                    ),
+                                    width=6,
+                                ),
+                            ],
+                            align="center",
+                            className="g-0",
+                        ),
                     ),
-                ),
-                html.H2("DiaDash Application", id="banner-title"),
-            ],
+                    dbc.DropdownMenu(
+                        children=[
+                            dbc.DropdownMenuItem("Additional Resources", header=True),
+                            dbc.DropdownMenuItem("Medtronic CareLink", href="#"),
+                            dbc.DropdownMenuItem("Source Code", href="#"),
+                        ],
+                        nav=True,
+                        in_navbar=True,
+                        label="Additional Resources",
+                    ),
+                ]
+            )
         )
+        return navbar
 
     def getButtonGroup() -> any:
         """
@@ -76,6 +105,7 @@ class mainContainer:
         """
         button_group = html.Div(
             [
+                html.Br(),
                 dbc.RadioItems(
                     id="view-radios",
                     className="btnGroup",
@@ -88,7 +118,10 @@ class mainContainer:
                         {"label": "Unknown View", "value": 3},
                     ],
                     value=1,
+                    labelStyle={"display": "inline-block"},
+                    inline=True,
                 ),
+                html.Br(),
                 html.Div(id="output"),
             ],
             className="radio-group",
@@ -98,7 +131,6 @@ class mainContainer:
     @app.callback(Output("output", "children"), [Input("view-radios", "value")])
     def generatePlot(value) -> any:
         """
-        @app.callback is not defined because it is not in the app.py itself. -- attempted import to fix this.
         Determines which plot to generate based on the Radio button selected.
         """
         if value == 1:
@@ -174,19 +206,13 @@ def serve_layout() -> list:
     """
     Returns layout containing components back to the app.
     """
-    return []
+    return [mainContainer.serve(), sidebarContainer.serve()]
 
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
 
-app.layout = html.Div(
-    children=[
-        mainContainer.getBanner(),
-        mainContainer.getButtonGroup(),
-        mainContainer.getMainPlot(),
-    ]
-)
+app.layout = dbc.Container(children=serve_layout())
 
 if __name__ == "__main__":
     app.run_server(debug=True)
