@@ -144,7 +144,7 @@ class mainContainer:
         Determines which plot to generate based on the Radio button selected.
         """
         if value == 1:
-            return mainContainer.getWeeklyPlot()
+            return mainContainer.getWeeklyView()
         elif value == 2:
             return mainContainer.getDailyPlot()
         elif value == 3:
@@ -177,13 +177,26 @@ class mainContainer:
         fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
         return dcc.Graph(id="example-graph", figure=fig)
 
-    def getWeeklyPlot() -> any:
+    def getWeeklyView() -> any:
         """
         Defines and returns the weekly view of the plot.
         """
-        pass
 
-    def getDailyPlot() -> any:
+        tab1_content = mainContainer.getMainPlot()
+        tab2_content = None
+        tab3_content = None
+
+        tabs = dbc.Tabs(
+            [
+                dbc.Tab(tab1_content, label="Line Plot"),
+                dbc.Tab(tab2_content, label="Violin Plot"),
+                dbc.Tab(tab3_content, label="Heat Map"),
+            ]
+        )
+
+        return tabs
+
+    def getDailyView() -> any:
         """
         Defines and returns the daily view of the plot.
         """
