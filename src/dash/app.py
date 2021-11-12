@@ -236,15 +236,23 @@ class sidebarContainer:
             [
                 dbc.Col(
                     [
-                        dbc.Input(type="bg-lower-bound", placeholder=90),
-                        dbc.Label("mg/dL lower bound"),
+                        dbc.FormFloating(
+                            [
+                                dbc.Input(type="bg-lower-bound", placeholder=120),
+                                dbc.Label("mg/dL lower bound"),
+                            ]
+                        )
                     ],
                     width=6,
                 ),
                 dbc.Col(
                     [
-                        dbc.Input(type="bg-upper-bound", placeholder=120),
-                        dbc.Label("mg/dL upper bound"),
+                        dbc.FormFloating(
+                            [
+                                dbc.Input(type="bg-upper-bound", placeholder=120),
+                                dbc.Label("mg/dL upper bound"),
+                            ]
+                        )
                     ],
                     width=6,
                 ),
