@@ -15,6 +15,8 @@ class <DivName>:
 
 """
 
+ASSET_PATH = "src/dash/assets/images"
+
 
 class mainContainer:
     """
@@ -38,7 +40,13 @@ class mainContainer:
         Defines and returns the banner div and its child components.
         """
         return html.Div(
-            id="banner", children=[html.H2("DiaDash Application", id="banner-title")]
+            id="banner",
+            children=[
+                html.Img(
+                    id="logo", src=app.get_asset_url("space_dashboard_black_24dp.svg")
+                ),
+                html.H2("DiaDash Application", id="banner-title"),
+            ],
         )
 
     def getButtonRow() -> any:
