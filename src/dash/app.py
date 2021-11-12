@@ -218,7 +218,10 @@ class sidebarContainer:
         """
         return dbc.Col(
             id="sidebar-container",
-            children=[sidebarContainer.getCardGrid()],
+            children=[
+                sidebarContainer.getSidebarHeader(),
+                sidebarContainer.getCardGrid(),
+            ],
             width=4,
             style={"border-left": "black"},
         )
@@ -227,8 +230,30 @@ class sidebarContainer:
         """
         Defines and returns a header with some basic text explanation.
         """
+        title = html.H3("Stats at a Glance", style={"text-align": "center"})
 
-        pass
+        bg_bounds_form = dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dbc.Input(type="bg-lower-bound", placeholder=90),
+                        dbc.Label("mg/dL lower bound"),
+                    ],
+                    width=6,
+                ),
+                dbc.Col(
+                    [
+                        dbc.Input(type="bg-upper-bound", placeholder=120),
+                        dbc.Label("mg/dL upper bound"),
+                    ],
+                    width=6,
+                ),
+            ]
+        )
+
+        sidebar_header = html.Div([html.Br(), title, html.Br(), bg_bounds_form])
+
+        return sidebar_header
 
     def createCard(header: str, value: str) -> any:
         """
