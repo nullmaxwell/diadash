@@ -297,22 +297,22 @@ class sidebarContainer:
         """
         row1 = dbc.Row(
             [
-                sidebarContainer.createCard("Metric", "Value"),
-                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Time in Range", "Value"),
+                sidebarContainer.createCard("Average mg/dL", "Value"),
             ]
         )
 
         row2 = dbc.Row(
             [
-                sidebarContainer.createCard("Metric", "Value"),
-                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Highest Avg. Day", "Value"),
+                sidebarContainer.createCard("Lowest Avg. Day", "Value"),
             ]
         )
 
         row3 = dbc.Row(
             [
-                sidebarContainer.createCard("Metric", "Value"),
-                sidebarContainer.createCard("Metric", "Value"),
+                sidebarContainer.createCard("Carbs Consumed", "Value"),
+                sidebarContainer.createCard("Insulin Dosed", "Value"),
             ]
         )
 
