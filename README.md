@@ -37,9 +37,13 @@ Desired flow (to be completed):
 4. Download data
 5. View Dashboard
 
-## Todo
+## To Do
+- Populate data 
+- Create graphs
+- Finish Sidebar header
+- Create third view to replace "Unknown View"
+- Create metrics class
 - Make Dockerfile
-
 
 --------
 
