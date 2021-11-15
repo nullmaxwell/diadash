@@ -12,6 +12,10 @@ import dash_bootstrap_components as dbc
 # Other Imports
 import pandas as pd
 
+# Local imports
+from src.data import update
+from src.visualization.visualize import *
+
 
 app = dash.Dash(
     __name__,
@@ -32,6 +36,132 @@ class <MajorDivName>:
     @app.callback for <ChildComponent>
 
 """
+
+
+class splashComponents:
+    """
+    Class housing all of the components available on the login landing page.
+    """
+
+    def serve() -> any:
+        """
+        Gets and returns all of the components for the splash login screen.
+        """
+        return splashComponents.getLogin()
+
+    def getLogin() -> any:
+        """
+        Defines and returns the login components
+        """
+        login_form = dbc.Container(
+            [
+                dbc.Col(
+                    [
+                        html.Img(
+                            id="login-logo",
+                            src=app.get_asset_url(
+                                "images/space_dashboard_black_48dp.svg"
+                            ),
+                        ),
+                        html.Br(),
+                        dbc.Row(
+                            [
+                                dbc.FormFloating(
+                                    [
+                                        dbc.Input(
+                                            id="login-field",
+                                            type="login",
+                                            placeholder="Username",
+                                        ),
+                                        dbc.Label("Medtronic CareLink Username"),
+                                    ]
+                                )
+                            ]
+                        ),
+                        html.Br(),
+                        dbc.Row(
+                            [
+                                dbc.FormFloating(
+                                    [
+                                        dbc.Input(
+                                            id="password-field",
+                                            type="password",
+                                            placeholder="Password",
+                                        ),
+                                        dbc.Label("Medtronic CareLink Password"),
+                                    ]
+                                )
+                            ]
+                        ),
+                        html.Br(),
+                        dbc.Row(
+                            [
+                                dbc.Button(
+                                    "Login",
+                                    id="login",
+                                    color="primary",
+                                    className="me-1",
+                                )
+                            ]
+                        ),
+                    ]
+                )
+            ],
+            className="container-login align-items-center justify-content-center",
+            style={"display": "flex"},
+        )
+
+        return login_form
+
+    def showSpinner() -> any:
+        """
+        Callback function to show spinner when the login button is pressed.
+        I am still deciding on the design of this at the moment.
+        Whether the spinner should be separate or not.
+        """
+        pass
+
+    # @app.callback(
+    #     Output("temp-out", "children"),
+    #     [Input("login-field", "value"), Input("password-field", "value")],
+    # )
+    def handleLoginFormInput(user, token) -> any:
+        """
+        Callback function for the login container.
+        Takes input from the login form and passes it to the MLC interface.
+
+        ## Parameters:
+            `usr` str: Username specified by the input form.
+            `pwd` str: Password specified by the input form.
+
+        ## Returns:
+            Spinner
+        """
+
+        """
+        Logic Notes.
+        1. Cast each input to a string if necessary (will be removed after testing)
+        2. Send input to the update.py -- will have to import the main function from update.py
+            - update.py/mcl_interface will have to be adapted to accept explicit arguments
+            - will just use the already written set methods that exist within the interface.
+        3. If a value error occurs then we know its a credentialing issue
+        4. Otherwise it will be considered an unknown error.
+        """
+
+        # This will be removed after testing. Can never be too safe.
+        try:
+            assert type(user) == "String"
+            assert type(token) == "String"
+        except:
+            usr = str(user)
+            pwd = str(token)
+
+        # Sending input to the data updating function
+        try:
+            update.main(user, token)
+        except ValueError:
+            print()  # TODO: Print that the username or password are inccorrect.
+        pass
 
 
 class generalComponents:
