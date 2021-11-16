@@ -339,7 +339,6 @@ class mainContainer:
 class sidebarContainer:
     """
     Class housing all of the items to be created and generated within the sidebar container.
-    I want the graph WITHIN the div to change based on the radio button. -- not produce a new div each time.
     """
 
     def serve() -> any:
