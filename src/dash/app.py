@@ -2,6 +2,7 @@
 # visit http://127.0.0.1:8050/ in your web browser.
 
 # Dash specific imports.
+from typing import Type
 import dash
 from dash import dcc
 from dash import html
@@ -57,57 +58,74 @@ class splashComponents:
             [
                 dbc.Col(
                     [
+                        html.Br(),
                         html.Img(
                             id="login-logo",
                             src=app.get_asset_url(
-                                "images/space_dashboard_black_48dp.svg"
+                                "images/space_dashboard_black_48dp.svg",
                             ),
                         ),
                         html.Br(),
+                        # This is where we would start the dbc.Form method
                         dbc.Row(
                             [
                                 dbc.FormFloating(
                                     [
-                                        dbc.Input(
-                                            id="login-field",
-                                            type="login",
-                                            placeholder="Username",
+                                        # Username input field
+                                        dbc.Row(
+                                            [
+                                                dbc.Input(
+                                                    id="login-field",
+                                                    type="login",
+                                                    placeholder="Username",
+                                                ),
+                                                dbc.Label(
+                                                    "Medtronic CareLink Username"
+                                                ),
+                                            ]
                                         ),
-                                        dbc.Label("Medtronic CareLink Username"),
+                                        # Password input field
+                                        dbc.Row(
+                                            [
+                                                dbc.Input(
+                                                    id="password-field",
+                                                    type="password",
+                                                    placeholder="Password",
+                                                ),
+                                                dbc.Label(
+                                                    "Medtronic CareLink Password"
+                                                ),
+                                            ]
+                                        ),
+                                        html.Br(),
+                                        dbc.Row(
+                                            [
+                                                dbc.Col(
+                                                    [
+                                                        dbc.Button(
+                                                            "Login",
+                                                            id="login-button",
+                                                            color="primary",
+                                                            className="me-1",
+                                                            style={"width": "150px"},
+                                                        )
+                                                    ],
+                                                    className="d-flex justify-content-center",
+                                                )
+                                            ]
+                                        ),
                                     ]
                                 )
                             ]
                         ),
                         html.Br(),
-                        dbc.Row(
-                            [
-                                dbc.FormFloating(
-                                    [
-                                        dbc.Input(
-                                            id="password-field",
-                                            type="password",
-                                            placeholder="Password",
-                                        ),
-                                        dbc.Label("Medtronic CareLink Password"),
-                                    ]
-                                )
-                            ]
-                        ),
-                        html.Br(),
-                        dbc.Row(
-                            [
-                                dbc.Button(
-                                    "Login",
-                                    id="login",
-                                    color="primary",
-                                    className="me-1",
-                                )
-                            ]
-                        ),
-                    ]
-                )
+                        # TODO: Resize this login button to be smaller than the input boxes.
+                        dbc.Row([html.P(id="temp-out")]),
+                    ],
+                    width=3,
+                ),
             ],
-            className="container-login align-items-center justify-content-center",
+            className="h-50 p-20 align-items-center justify-content-center display-flex",
             style={"display": "flex"},
         )
 
@@ -121,10 +139,32 @@ class splashComponents:
         """
         pass
 
-    # @app.callback(
-    #     Output("temp-out", "children"),
-    #     [Input("login-field", "value"), Input("password-field", "value")],
-    # )
+    @app.callback(
+        Output("temp-out", "children"),
+        [
+            Input("login-button", "n_clicks"),
+            Input("login-field", "value"),
+            Input("password-field", "value"),
+        ],
+    )
+    def onLoginClick(n_clicks, user, token) -> any:
+        """
+        Just a testing method for understanding how the data flows with the dbc.Form
+        """
+        if n_clicks == None:
+            return "You have not logged in yet"
+        else:
+            # show spinning thingy
+            try:
+                update.main(user, token)
+                # spinner -> check mark when data is downloaded
+                
+
+            except ValueError:
+                return html.P() # Show login error message
+
+            return user + token
+
     def handleLoginFormInput(user, token) -> any:
         """
         Callback function for the login container.
@@ -459,9 +499,9 @@ class sidebarContainer:
 # ---------------------------------------------------------------------------------------
 
 
-def serve_layout() -> list:
+def serve_main_page() -> list:
     """
-    Returns layout containing components back to the app.
+    Returns layout containing the main application.
     """
     return [
         generalComponents.getNavBar(),
@@ -474,7 +514,14 @@ def serve_layout() -> list:
     ]
 
 
-app.layout = dbc.Container(children=serve_layout())
+def serve_login_page() -> list:
+    """
+    Returns layout containing the login page.
+    """
+    return [splashComponents.serve()]
+
+
+app.layout = dbc.Container(children=serve_login_page())
 
 if __name__ == "__main__":
     app.run_server(debug=True)

@@ -31,13 +31,18 @@ class MCL_Interface:
         "application/csv, text/csv, text/plain,application/octet-stream doc xls pdf txt",
     )
 
-    def __init__(self) -> None:
+    def __init__(self, user, token) -> None:
         """
         Constructor.
         """
-        self.creds = CredentialHandler()
-        self.user = self.creds.getUser()
-        self.token = self.creds.getToken()
+        if usr == None and token == None:
+            self.creds = CredentialHandler()
+            self.user = self.creds.getUser()
+            self.token = self.creds.getToken()
+        else:
+            self.user = user
+            self.token = token
+
         self.driver = webdriver.Firefox(options=MCL_Interface.OPTIONS)
         pass
 
@@ -63,7 +68,23 @@ class MCL_Interface:
         self.driver.find_element(
             By.XPATH, "/html/body/div/div/div[3]/form/div[3]/input"
         ).click()
-        pass
+
+        # Checking if an error was posted after login attempt (incorrect user pass)
+        self.driver.implicitly_wait(1)
+
+        login_success = None
+        try:
+            # Check if error ID exists
+            self.driver.find_element(By.ID, "error")
+        except NoSuchElementException:
+            login_success = True
+        login_success = False
+
+        # Raise Custom Exception
+        if login_success:
+            pass
+        else:
+            raise ValueError("Invalid username or password.")
 
     def pullCSVReports(self) -> None:
         """
