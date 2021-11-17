@@ -154,14 +154,13 @@ class splashComponents:
         if n_clicks == None:
             return "You have not logged in yet"
         else:
-            # show spinning thingy
             try:
                 update.main(user, token)
                 # spinner -> check mark when data is downloaded
-                
+                # Show main app page
 
             except ValueError:
-                return html.P() # Show login error message
+                return html.P()  # Show login error message
 
             return user + token
 
