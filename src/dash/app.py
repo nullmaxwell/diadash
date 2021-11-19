@@ -7,7 +7,7 @@ import dash
 from dash import dcc
 from dash import html
 import plotly.express as px
-from dash import Input, Output
+from dash import Input, Output, State
 import dash_bootstrap_components as dbc
 
 # Other Imports
@@ -107,6 +107,7 @@ class splashComponents:
                                                             id="login-button",
                                                             color="primary",
                                                             className="me-1",
+                                                            type="button",
                                                             style={"width": "150px"},
                                                         )
                                                     ],
@@ -119,8 +120,11 @@ class splashComponents:
                             ]
                         ),
                         html.Br(),
-                        # TODO: Resize this login button to be smaller than the input boxes.
-                        dbc.Row([html.P(id="temp-out")]),
+                        dbc.Row(
+                            [html.P(id="temp-out")],
+                            className="d-flex justify-content-center",
+                        ),
+                        dbc.Row([dbc.Spinner(html.Div(id="loading-spinner"))]),
                     ],
                     width=3,
                 ),
@@ -131,20 +135,17 @@ class splashComponents:
 
         return login_form
 
-    def showSpinner() -> any:
-        """
-        Callback function to show spinner when the login button is pressed.
-        I am still deciding on the design of this at the moment.
-        Whether the spinner should be separate or not.
-        """
-        pass
-
+    # Callback to show the spinner when the login/download button is pressed.
+    @app.callback(
+        Output("loading-spinner", "children"), [Input("login-button", "n_clicks")]
+    )
+    # Callback to send the values from the user and pwd fields to the update interface.
     @app.callback(
         Output("temp-out", "children"),
         [
             Input("login-button", "n_clicks"),
-            Input("login-field", "value"),
-            Input("password-field", "value"),
+            State("login-field", "value"),
+            State("password-field", "value"),
         ],
     )
     def onLoginClick(n_clicks, user, token) -> any:
@@ -155,14 +156,16 @@ class splashComponents:
             return "You have not logged in yet"
         else:
             try:
-                update.main(user, token)
-                # spinner -> check mark when data is downloaded
-                # Show main app page
-
+                return user + token
+                # TODO: Fill out the comments below
+                # update.main(user, token)
+                # show check mark confirming data downloaded
+                # show main app page
+                # return green check or something affirmative
             except ValueError:
                 return html.P()  # Show login error message
-
-            return user + token
+            except:
+                return html.P()  # Unknown error, try again later.
 
     def handleLoginFormInput(user, token) -> any:
         """
