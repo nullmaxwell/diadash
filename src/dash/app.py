@@ -189,21 +189,20 @@ class splashComponents:
         3. If a value error occurs then we know its a credentialing issue
         4. Otherwise it will be considered an unknown error.
         """
-
-        # This will be removed after testing. Can never be too safe.
-        try:
-            assert type(user) == "String"
-            assert type(token) == "String"
-        except:
-            usr = str(user)
-            pwd = str(token)
-
-        # Sending input to the data updating function
-        try:
-            update.main(user, token)
-        except ValueError:
-            print()  # TODO: Print that the username or password are inccorrect.
-        pass
+        if n_clicks == None:
+            return "You have not logged in yet"
+        else:
+            try:
+                return user + token
+                # TODO: Fill out the comments below
+                # update.main(user, token)
+                # show check mark confirming data downloaded
+                # show main app page
+                # return green check or something affirmative
+            except ValueError:
+                return html.P()  # Show login error message
+            except:
+                return html.P()  # Unknown error, try again later.
 
 
 class generalComponents:
