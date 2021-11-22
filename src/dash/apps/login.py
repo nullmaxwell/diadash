@@ -7,6 +7,7 @@ import dash_bootstrap_components as dbc
 
 # Internal Application Imports
 from app import app
+from src.data import update
 
 
 def serve_layout() -> any:
