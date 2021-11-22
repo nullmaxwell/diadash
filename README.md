@@ -37,6 +37,9 @@ Desired flow (to be completed):
 4. Download data
 5. View Dashboard
 
+## Screenshots
+Placeholder
+
 ## To Do
 - Populate data 
 - Create graphs
