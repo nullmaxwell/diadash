@@ -3,6 +3,7 @@
 
 # Dash specific imports.
 from typing import Type
+import time
 import dash
 from dash import dcc
 from dash import html
