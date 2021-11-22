@@ -76,9 +76,9 @@ class MCL_Interface:
         try:
             # Check if error ID exists
             self.driver.find_element(By.ID, "error")
+            login_success = False
         except NoSuchElementException:
             login_success = True
-        login_success = False
 
         # Raise Custom Exception
         if login_success:
