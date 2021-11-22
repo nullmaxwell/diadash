@@ -516,7 +516,25 @@ def serve_login_page() -> list:
     return [splashComponents.serve()]
 
 
-app.layout = dbc.Container(children=serve_login_page())
+# children=serve_login_page(),
+app.layout = dbc.Container(
+    id="page-content", children=[dcc.Location(id="url", refresh=False)]
+)
+
+
+# Callback to change which page to display
+@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+def display_page(pathname) -> any:
+    """
+    Placeholder description
+    """
+    if pathname == "/":
+        print(str(pathname), "Login page served.")
+        return serve_login_page()
+    if pathname == "/board":
+        print(str(pathname), "Main app served.")
+        return serve_main_page()
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
