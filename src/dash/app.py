@@ -22,6 +22,7 @@ app = dash.Dash(
     __name__,
     assets_url_path="src/dash/assets",
     external_stylesheets=[dbc.themes.MORPH],
+    suppress_callback_exceptions=True,
 )
 
 app.title = "DiaDash"
