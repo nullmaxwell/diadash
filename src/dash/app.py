@@ -122,7 +122,7 @@ class splashComponents:
                         ),
                         html.Br(),
                         dbc.Row(
-                            [html.P(id="temp-out")],
+                            [dbc.Container(id="temp-out")],
                             className="d-flex justify-content-center",
                         ),
                         dbc.Row([dbc.Spinner(html.Div(id="loading-spinner"))]),
@@ -136,13 +136,11 @@ class splashComponents:
 
         return login_form
 
-    # Callback to show the spinner when the login/download button is pressed.
-    @app.callback(
-        Output("loading-spinner", "children"), [Input("login-button", "n_clicks")]
-    )
+    # # Callback to show the spinner when the login/download button is pressed.
+    @app.callback(Output("temp-out", "children"), [Input("login-button", "n_clicks")])
     # Callback to send the values from the user and pwd fields to the update interface.
     @app.callback(
-        Output("temp-out", "children"),
+        Output("loading-spinner", "children"),
         [
             Input("login-button", "n_clicks"),
             State("login-field", "value"),
@@ -150,25 +148,6 @@ class splashComponents:
         ],
     )
     def onLoginClick(n_clicks, user, token) -> any:
-        """
-        Just a testing method for understanding how the data flows with the dbc.Form
-        """
-        if n_clicks == None:
-            return "You have not logged in yet"
-        else:
-            try:
-                return user + token
-                # TODO: Fill out the comments below
-                # update.main(user, token)
-                # show check mark confirming data downloaded
-                # show main app page
-                # return green check or something affirmative
-            except ValueError:
-                return html.P()  # Show login error message
-            except:
-                return html.P()  # Unknown error, try again later.
-
-    def handleLoginFormInput(user, token) -> any:
         """
         Callback function for the login container.
         Takes input from the login form and passes it to the MLC interface.
@@ -178,7 +157,8 @@ class splashComponents:
             `pwd` str: Password specified by the input form.
 
         ## Returns:
-            Spinner
+            If completely successful it will update the layout to the main app.
+            If any failure occurs the GUI will show the appropriate error.
         """
 
         """
@@ -191,19 +171,31 @@ class splashComponents:
         4. Otherwise it will be considered an unknown error.
         """
         if n_clicks == None:
-            return "You have not logged in yet"
+            return
         else:
             try:
-                return user + token
-                # TODO: Fill out the comments below
                 # update.main(user, token)
-                # show check mark confirming data downloaded
-                # show main app page
-                # return green check or something affirmative
+                time.sleep(2)  # to sim something happening in background
+                return dbc.Alert(
+                    dcc.Link(
+                        "Data download successful!\n\nClick here to continue to the dashboard.",
+                        href="/board",
+                        refresh=True,
+                    ),
+                    color="success",
+                )
             except ValueError:
-                return html.P()  # Show login error message
+                return dbc.Alert(
+                    "Invalid Username or Password. Please try again.",
+                    color="danger",
+                    duration=3,
+                )
             except:
-                return html.P()  # Unknown error, try again later.
+                return dbc.Alert(
+                    "Data download failure due to unknown error! Please try again later.",
+                    color="danger",
+                    duration=3,
+                )
 
 
 class generalComponents:
