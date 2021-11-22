@@ -71,6 +71,7 @@ def getLogin() -> any:
                                                         className="me-1",
                                                         type="button",
                                                         style={"width": "150px"},
+                                                        n_clicks=0,
                                                     )
                                                 ],
                                                 className="d-flex justify-content-center",
@@ -83,7 +84,7 @@ def getLogin() -> any:
                     ),
                     html.Br(),
                     dbc.Row(
-                        [dbc.Container(id="temp-out")],
+                        [dbc.Container(id="status-container")],
                         className="d-flex justify-content-center",
                     ),
                     dbc.Row([dbc.Spinner(html.Div(id="loading-spinner"))]),
@@ -99,7 +100,9 @@ def getLogin() -> any:
 
 
 # # Callback to show the spinner when the login/download button is pressed.
-@app.callback(Output("temp-out", "children"), [Input("login-button", "n_clicks")])
+@app.callback(
+    Output("status-container", "children"), [Input("login-button", "n_clicks")]
+)
 # Callback to send the values from the user and pwd fields to the update interface.
 @app.callback(
     Output("loading-spinner", "children"),
