@@ -17,7 +17,7 @@ class MCL_Interface:
     Handles all of the web navigation necessary to download the reports.
     """
 
-    DATA_OUT_PATH = str(pathlib.Path("data/external").resolve())
+    DATA_OUT_PATH = str(pathlib.Path("data/raw").resolve())
 
     # Class Attributes
     TIMEOUT = 40  # in seconds
