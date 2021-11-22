@@ -125,8 +125,11 @@ def onLoginClick(n_clicks, user, token) -> any:
         If completely successful have an alert directing user to main application.
         If any failure occurs the GUI will show the appropriate error.
     """
-    if n_clicks == None:
-        return
+    if n_clicks == 0:
+        return dbc.Alert(
+            "Note: These credentials are not stored in any way. They are used one time to pull data from Medtronic.",
+            color="info",
+        )
     else:
         try:
             # update.main(user, token)
