@@ -35,7 +35,7 @@ class MCL_Interface:
         """
         Constructor.
         """
-        if usr == None and token == None:
+        if user == None and token == None:
             self.creds = CredentialHandler()
             self.user = self.creds.getUser()
             self.token = self.creds.getToken()
