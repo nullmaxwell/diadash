@@ -158,18 +158,8 @@ class splashComponents:
             `pwd` str: Password specified by the input form.
 
         ## Returns:
-            If completely successful it will update the layout to the main app.
+            If completely successful have an alert directing user to main application.
             If any failure occurs the GUI will show the appropriate error.
-        """
-
-        """
-        Logic Notes.
-        1. Cast each input to a string if necessary (will be removed after testing)
-        2. Send input to the update.py -- will have to import the main function from update.py
-            - update.py/mcl_interface will have to be adapted to accept explicit arguments
-            - will just use the already written set methods that exist within the interface.
-        3. If a value error occurs then we know its a credentialing issue
-        4. Otherwise it will be considered an unknown error.
         """
         if n_clicks == None:
             return
