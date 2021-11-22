@@ -82,6 +82,9 @@ class generalComponents:
                             dbc.DropdownMenuItem("Additional Resources", header=True),
                             dbc.DropdownMenuItem("Medtronic CareLink", href="#"),
                             dbc.DropdownMenuItem("Source Code", href="#"),
+                            dbc.DropdownMenuItem(
+                                dcc.Link("Logout", href="/", refresh=True)
+                            ),
                         ],
                         nav=True,
                         in_navbar=True,
