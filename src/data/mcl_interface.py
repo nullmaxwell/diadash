@@ -3,6 +3,7 @@ import pathlib
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.common.exceptions import NoSuchElementException
 
 # All below necessary for waitForPage
 from selenium.webdriver.support.ui import WebDriverWait
