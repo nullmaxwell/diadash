@@ -95,6 +95,34 @@ class generalComponents:
         )
         return navbar
 
+    def createCard(header: str, value: str) -> any:
+        """
+        Wrapper function that defines the content of a card
+        based on a value and provided header.
+        """
+        content = [
+            dbc.CardHeader(header),
+            dbc.CardBody(
+                [
+                    html.P(
+                        value,
+                        className="card-body align-items-center d-flex justify-content-center",
+                    )
+                ]
+            ),
+        ]
+
+        card = dbc.Col(
+            dbc.Card(
+                content,
+                color="secondary",
+                outline=True,
+                className="card-body align-items-center d-flex justify-content-center",
+            )
+        )
+
+        return card
+
 
 class mainContainer:
     """
@@ -245,63 +273,35 @@ class sidebarContainer:
 
         return sidebar_header
 
-    def createCard(header: str, value: str) -> any:
-        """
-        Wrapper function that defines the content of a card
-        based on a value and provided header.
-        """
-        content = [
-            dbc.CardHeader(header),
-            dbc.CardBody(
-                [
-                    html.P(
-                        value,
-                        className="card-body align-items-center d-flex justify-content-center",
-                    )
-                ]
-            ),
-        ]
-
-        card = dbc.Col(
-            dbc.Card(
-                content,
-                color="secondary",
-                outline=True,
-                className="card-body align-items-center d-flex justify-content-center",
-            )
-        )
-
-        return card
-
     def getCardGrid() -> any:
         """
         Defines and returns a grid of cards to display stats on.
         """
         row1 = dbc.Row(
             [
-                sidebarContainer.createCard("Time in Range", "Value"),
-                sidebarContainer.createCard("Average mg/dL", "Value"),
+                generalComponents.createCard("Time in Range", "Value"),
+                generalComponents.createCard("Average mg/dL", "Value"),
             ]
         )
 
         row2 = dbc.Row(
             [
-                sidebarContainer.createCard("Highest Avg. Day", "Value"),
-                sidebarContainer.createCard("Lowest Avg. Day", "Value"),
+                generalComponents.createCard("Highest Avg. Day", "Value"),
+                generalComponents.createCard("Lowest Avg. Day", "Value"),
             ]
         )
 
         row3 = dbc.Row(
             [
-                sidebarContainer.createCard("Carbs Consumed", "Value"),
-                sidebarContainer.createCard("Insulin Dosed", "Value"),
+                generalComponents.createCard("Carbs Consumed", "Value"),
+                generalComponents.createCard("Insulin Dosed", "Value"),
             ]
         )
 
         # row4 = dbc.Row(
         #     [
-        #         sidebarContainer.createCard("Metric", "Value"),
-        #         sidebarContainer.createCard("Metric", "Value"),
+        #         generalComponents.createCard("Metric", "Value"),
+        #         generalComponents.createCard("Metric", "Value"),
         #     ]
         # )
 
