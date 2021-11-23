@@ -26,7 +26,7 @@ def main(user, token):
     dl_agent.login()
     dl_agent.pullCSVReports()
 
-    # This sleep command essentially waits until the data is downloaded
+    # This sleep command adds a buffer of time to allow for data to be written to disk
     sleep(5)
 
     try:
