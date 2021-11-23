@@ -239,7 +239,9 @@ class sidebarContainer:
             ]
         )
 
-        sidebar_header = html.Div([html.Br(), title, html.Br(), bg_bounds_form])
+        sidebar_header = html.Div(
+            [html.Br(style={"margin": "10px"}), title, html.Br(), bg_bounds_form]
+        )
 
         return sidebar_header
 
