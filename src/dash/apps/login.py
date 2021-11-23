@@ -100,7 +100,7 @@ def getLogin() -> any:
     return login_form
 
 
-# # Callback to show the spinner when the login/download button is pressed.
+# Callback to show the spinner when the login/download button is pressed.
 @app.callback(
     Output("status-container", "children"), [Input("login-button", "n_clicks")]
 )
