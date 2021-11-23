@@ -12,7 +12,7 @@ class WeeklyDataPipeline:
     Proc 4: castFeatures
     """
 
-    def readData(filename: str = "data/external/mcl_raw_data.csv") -> pd.DataFrame:
+    def readData(filename: str = "data/raw/raw_data.csv") -> pd.DataFrame:
         """
         Reads the updated Medtronic CareLink data export.
         Header set to 4 to offset the other headers on the file.
