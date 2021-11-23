@@ -4,6 +4,7 @@ import time
 import dash
 from dash import dcc
 from dash import html
+from dash_bootstrap_components._components.Row import Row
 import plotly.express as px
 from dash import Input, Output
 import dash_bootstrap_components as dbc
@@ -25,7 +26,11 @@ def serve_layout() -> list:
             [
                 dbc.Col(
                     id="main-container",
-                    children=[mainContainer.getButtonGroup()],
+                    children=[
+                        mainContainer.getButtonGroup(),
+                        html.Br(style={"margin": "10px"}),
+                        mainContainer.getCardRow(),
+                    ],
                     width=8,
                 ),
                 dbc.Col(
@@ -228,6 +233,21 @@ class mainContainer:
         """
         pass
 
+    def getCardRow() -> any:
+        """
+        Defines and returns the row of cards
+        """
+        card_row = dbc.Row(
+            [
+                generalComponents.createCard("Time in Range", "Value"),
+                generalComponents.createCard("Time high", "Value"),
+                generalComponents.createCard("Time low", "Value"),
+                generalComponents.createCard("Average mg/dL", "Value"),
+            ]
+        )
+
+        return card_row
+
 
 class sidebarContainer:
     """
@@ -297,13 +317,6 @@ class sidebarContainer:
                 generalComponents.createCard("Insulin Dosed", "Value"),
             ]
         )
-
-        # row4 = dbc.Row(
-        #     [
-        #         generalComponents.createCard("Metric", "Value"),
-        #         generalComponents.createCard("Metric", "Value"),
-        #     ]
-        # )
 
         grid = html.Div([html.Br(), row1, html.Br(), row2, html.Br(), row3, html.Br()])
         return grid
