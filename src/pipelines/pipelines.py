@@ -32,14 +32,25 @@ class WeeklyDataPipeline:
             dictionary of sliced DataFrames indexed by chunk.
         """
         ret_dict = {}
+
+        # Gets indexes where a header is present
+        # The length of this array is either 1 or 2
         arr = df[df["Index"] == "Index"].index.values.astype(int)
 
-        # General Data and settings
-        ret_dict["chunk1"] = df.iloc[0 : arr[0] - 1]
-        # Carb and Insulin data
-        ret_dict["chunk2"] = df.iloc[arr[0] + 1 : arr[1] - 2]
-        # ISIG and Glucose data
-        ret_dict["chunk3"] = df.iloc[arr[1] + 1 : len(df) - 1]
+        # Most typical case
+        if len(arr) == 2:
+            # General Data and settings
+            ret_dict["chunk1"] = df.iloc[0 : arr[0] - 1]
+            # Carb and Insulin data
+            ret_dict["chunk2"] = df.iloc[arr[0] + 1 : arr[1] - 2]
+            # ISIG and Glucose data
+            ret_dict["chunk3"] = df.iloc[arr[1] + 1 : len(df) - 1]
+        # Edge case
+        elif len(arr) == 1:
+            # General Data and settings
+            ret_dict["chunk1"] = df.iloc[0 : arr[0] - 1]
+            # ISIG and Glucose data
+            ret_dict["chunk3"] = df.iloc[arr[0] + 1 : len(df) - 1]
 
         del df
         return ret_dict
@@ -62,7 +73,8 @@ class WeeklyDataPipeline:
         ]
 
         # Chunk2 -- removed for space saving, currently does not have a use. (may change in future)
-        del chunk_dict["chunk2"]
+        if "chunk2" in chunk_dict:
+            del chunk_dict["chunk2"]
 
         # Chunk3
         chunk_dict["chunk3"] = chunk_dict["chunk3"][
