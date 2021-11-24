@@ -2,6 +2,7 @@ import argparse
 from time import sleep
 from os import listdir, rename
 from src.data.mcl_interface import MCL_Interface
+from src.pipelines.pipelines import WeeklyDataPipeline
 
 # CLI Argument settings.
 # parser = argparse.ArgumentParser()
@@ -38,7 +39,12 @@ def main(user, token):
     except:
         raise
     finally:
-        # TODO: Run data pipeline pushing output to `processed/` dir
+        """
+        TODO:
+        1. Run data pipeline
+        2. Calculate statistics
+        """
+        # cleaned_dict = WeeklyDataPipeline.pipe()
         pass
 
 
