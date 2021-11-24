@@ -1,28 +1,37 @@
 import pandas as pd
 from datetime import date
+from src.data.update import cleaned_dict
 
 
 class Stats:
     """
-    Singleton class to house all of the stat card values.
+    Class to house and update all of the stat card values.
     """
 
-    def __init__(self, dict, lower, upper) -> None:
-        self.tir = Stats.getTimeInRange(lower, upper)
-        self.timeHigh = Stats.getTimeHigh()
-        self.timeLow = Stats.getTimeLow()
-        self.avgBG = Stats.getAvgBG()
-        self.highestDay = Stats.getHighestDay()
-        self.lowestDay = Stats.getLowestDay()
-        self.longestStint = Stats.getLongestStint()
-        self.carbsConsumed = Stats.getCarbsConsumed()
-        self.bolusTotal = Stats.getBolusTotal()
+    def __init__(self, low_bound: int, high_bound: int) -> None:
+        self.tir = Stats.getTimeInRange(cleaned_dict["chunk3"], low_bound, high_bound)
+        self.timeHigh = Stats.getTimeHigh(cleaned_dict["chunk3"], high_bound)
+        self.timeLow = Stats.getTimeLow(cleaned_dict["chunk3"], low_bound)
+        self.avgBG = Stats.getAvgBG(cleaned_dict["chunk3"])
+        self.highestDay = Stats.getHighestDay(cleaned_dict["chunk3"])
+        self.lowestDay = Stats.getLowestDay(cleaned_dict["chunk3"])
+        self.longestStint = Stats.getLongestStint(
+            cleaned_dict["chunk3"], low_bound, high_bound
+        )
+        self.carbsConsumed = Stats.getCarbsConsumed(cleaned_dict["chunk1"])
+        self.bolusTotal = Stats.getBolusTotal(cleaned_dict["chunk1"])
         pass
 
-    def updateAll(low_bound: int, high_bound: int) -> bool:
+    def updateAll(self, low_bound: int, high_bound: int) -> bool:
         """
-        Updates all statistics based on input.
+        Updates
         """
+        self.tir = Stats.getTimeInRange(cleaned_dict["chunk3"], low_bound, high_bound)
+        self.timeHigh = Stats.getTimeHigh(cleaned_dict["chunk3"], high_bound)
+        self.timeLow = Stats.getTimeLow(cleaned_dict["chunk3"], low_bound)
+        self.longestStint = Stats.getLongestStint(
+            cleaned_dict["chunk3"], low_bound, high_bound
+        )
         pass
 
     def getTimeInRange(df: pd.DataFrame, low_bound: int, high_bound: int) -> str:
