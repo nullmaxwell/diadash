@@ -148,8 +148,10 @@ class Stats:
 
     def getCarbsConsumed(df: pd.DataFrame) -> str:
         """ """
-        return "N/A"
+        total = df["BWZ Carb Input (grams)"].sum().item()
+        return str(total) + "g"
 
     def getBolusTotal(df: pd.DataFrame) -> str:
         """ """
-        return int(df["Bolus Volume Delivered (U)"].sum())
+        total = int(df["Bolus Volume Delivered (U)"].sum())
+        return str(total) + "U"
