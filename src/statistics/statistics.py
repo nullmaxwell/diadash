@@ -149,6 +149,6 @@ class Stats:
         """ """
         return "N/A"
 
-    def getBolusTotal() -> str:
+    def getBolusTotal(df: pd.DataFrame) -> str:
         """ """
         return int(df["Bolus Volume Delivered (U)"].sum())
