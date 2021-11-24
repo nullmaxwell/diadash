@@ -66,7 +66,8 @@ class Stats:
         """
         Calculates average Blood sugar through all of the data
         """
-        return df["Sensor Glucose (mg/dL)"].mean().astype("int32")
+        average = df["Sensor Glucose (mg/dL)"].mean().astype("int32")
+        return str(average) + "mg/dL"
 
     def getHighestDay(df: pd.DataFrame) -> str:
         """
@@ -91,7 +92,7 @@ class Stats:
                 ret_dict["Date"] = pd.Timestamp(day).strftime("%A %m-%d")
                 ret_dict["Value"] = found_value
 
-        return ret_dict
+        return ret_dict["Date"] + " " + str(ret_dict["Value"])
 
     def getLowestDay(df: pd.DataFrame) -> str:
         """
@@ -116,7 +117,7 @@ class Stats:
                 ret_dict["Date"] = pd.Timestamp(day).strftime("%A %m-%d")
                 ret_dict["Value"] = found_value
 
-        return ret_dict
+        return ret_dict["Date"] + " " + str(ret_dict["Value"])
 
     def getLongestStint(df: pd.DataFrame, lower_bound: int, upper_bound: int) -> str:
         """
