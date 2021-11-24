@@ -69,7 +69,14 @@ class WeeklyDataPipeline:
         """
         # Chunk 1
         chunk_dict["chunk1"] = chunk_dict["chunk1"][
-            ["Index", "Date", "Time", "Bolus Volume Delivered (U)", "Basal Rate (U/h)"]
+            [
+                "Index",
+                "Date",
+                "Time",
+                "Bolus Volume Delivered (U)",
+                "Basal Rate (U/h)",
+                "BWZ Carb Input (grams)",
+            ]
         ]
 
         # Chunk2 -- removed for space saving, currently does not have a use. (may change in future)
@@ -103,7 +110,11 @@ class WeeklyDataPipeline:
                 lambda x: x.time()
             )
 
-        for _ in ["Bolus Volume Delivered (U)", "Basal Rate (U/h)"]:
+        for _ in [
+            "Bolus Volume Delivered (U)",
+            "Basal Rate (U/h)",
+            "BWZ Carb Input (grams)",
+        ]:
             chunk_dict["chunk1"][_] = chunk_dict["chunk1"][_].astype("float32")
 
         # Chunk2 -- Nothing to do as of now
