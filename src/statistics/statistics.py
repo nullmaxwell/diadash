@@ -25,6 +25,7 @@ class Stats:
     def updateAll(self, low_bound: int, high_bound: int) -> bool:
         """
         Updates
+        Updates dependent bound-dependent metrics using the stored dict.
         """
         self.tir = Stats.getTimeInRange(cleaned_dict["chunk3"], low_bound, high_bound)
         self.timeHigh = Stats.getTimeHigh(cleaned_dict["chunk3"], high_bound)
