@@ -1,7 +1,5 @@
 # Dash specific imports.
 from typing import Type
-import time
-import dash
 from dash import dcc
 from dash import html
 from dash_bootstrap_components._components.Row import Row
