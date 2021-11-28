@@ -317,17 +317,18 @@ class sidebarContainer:
                         dbc.Col(
                             [
                                 html.Img(
-                                    id="refresh-icon",
+                                    id="info-icon",
                                     src=app.get_asset_url(
-                                        "images/update_black_48dp.svg",
+                                        "images/help_outline_black_48dp.svg",
                                     ),
                                     style={
-                                        "height": "30px",
-                                        "padding-bottom": "13px",
+                                        "height": "35px",
+                                        "padding-top": "18px",
                                     },
                                 ),
                             ],
-                            width=3,
+                            width=2,
+                            className="d-flex justify-content-center",
                         ),
                         # TODO: This is where the toast notification column will go
                         dbc.Col(
@@ -353,7 +354,7 @@ class sidebarContainer:
                                     n_clicks=0,
                                 ),
                             ],
-                            width=3,
+                            width=2,
                         ),
                     ]
                 ),
