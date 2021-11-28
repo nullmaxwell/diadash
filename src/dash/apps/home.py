@@ -4,14 +4,25 @@ from dash import dcc
 from dash import html
 from dash_bootstrap_components._components.Row import Row
 import plotly.express as px
-from dash import Input, Output
+from dash import Input, Output, State
 import dash_bootstrap_components as dbc
 
 # Internal Application Imports
 from app import app
+from src.data.update import metrics
+from src.pipelines.pipelines import WeeklyDataPipeline
+from src.statistics.statistics import Stats
 
 # Other imports
 import pandas as pd
+
+# Global Variable for Processed data
+PROCESSED_DATA = None
+
+try:
+    PROCESSED_DATA = WeeklyDataPipeline.pipe()
+except FileNotFoundError:
+    PROCESSED_DATA = None
 
 
 def serve_layout() -> list:
@@ -26,8 +37,8 @@ def serve_layout() -> list:
                     id="main-container",
                     children=[
                         mainContainer.getButtonGroup(),
-                        html.Br(style={"margin": "35px"}),
-                        mainContainer.getCardRow(),
+                        html.Br(style={"margin": "53px"}),
+                        dbc.Row(id="card-row"),
                     ],
                     width=8,
                 ),
@@ -35,7 +46,7 @@ def serve_layout() -> list:
                     id="sidebar-container",
                     children=[
                         sidebarContainer.getSidebarHeader(),
-                        sidebarContainer.getCardGrid(),
+                        html.Div(id="card-grid"),
                     ],
                     width=4,
                     style={"border-left": "black"},
@@ -104,14 +115,19 @@ class generalComponents:
         based on a value and provided header.
         """
         content = [
-            dbc.CardHeader(header),
+            dbc.CardHeader(
+                header,
+                style={"width": "190px", "height": "75px"},
+                className="align-items-center d-flex justify-content-center",
+            ),
             dbc.CardBody(
                 [
                     html.P(
                         value,
                         className="card-body align-items-center d-flex justify-content-center",
+                        style={"height": "75px"},
                     )
-                ]
+                ],
             ),
         ]
 
@@ -121,6 +137,7 @@ class generalComponents:
                 color="secondary",
                 outline=True,
                 className="card-body align-items-center d-flex justify-content-center",
+                style={"height": "190px", "width": "190px"},
             )
         )
 
@@ -231,16 +248,16 @@ class mainContainer:
         """
         pass
 
-    def getCardRow() -> any:
+    def getCardRow(stats_obj: Stats) -> any:
         """
         Defines and returns the row of cards
         """
         card_row = dbc.Row(
             [
-                generalComponents.createCard("Time in Range", "Value"),
-                generalComponents.createCard("Time high", "Value"),
-                generalComponents.createCard("Time low", "Value"),
-                generalComponents.createCard("Average mg/dL", "Value"),
+                generalComponents.createCard("Time in Range", stats_obj.tir),
+                generalComponents.createCard("Time high", stats_obj.timeHigh),
+                generalComponents.createCard("Time low", stats_obj.timeLow),
+                generalComponents.createCard("Average mg/dL", stats_obj.avgBG),
             ]
         )
 
@@ -342,30 +359,68 @@ class sidebarContainer:
 
         return sidebar_header
 
-    def getCardGrid() -> any:
+    # Output of this slider must be the div ID of the card row below graph and card grid
+    @app.callback(
+        Output("card-row", "children"),
+        Output("card-grid", "children"),
+        [
+            Input("refresh-button", "n_clicks"),
+            State("bg-target-slider", "value"),
+            State("daily-basal-amount", "value"),
+        ],
+    )
+    def onRefreshClick(n_clicks, s_arr, daily_basal_amount) -> any:
+        """
+        Updates all of stat cards based on the provided values.
+        """
+        global PROCESSED_DATA
+
+        # Where the button has not yet been clicked
+        if n_clicks == 0:
+            # will need to pass daily_basal_amount to stats
+            stats_obj = Stats(PROCESSED_DATA, s_arr[0], s_arr[1], 0)
+            return mainContainer.getCardRow(stats_obj), sidebarContainer.getCardGrid(
+                stats_obj
+            )
+        # Where the button is being clicked for the first time
+        if n_clicks == 1:
+            # attempt pipeline again
+            stats_obj = WeeklyDataPipeline.pipe()
+            temp = Stats(PROCESSED_DATA, s_arr[0], s_arr[1], daily_basal_amount)
+            return mainContainer.getCardRow(stats_obj), sidebarContainer.getCardGrid(
+                stats_obj
+            )
+        # Any time after that
+        else:
+            stats_obj = Stats(PROCESSED_DATA, s_arr[0], s_arr[1], daily_basal_amount)
+            return mainContainer.getCardRow(stats_obj), sidebarContainer.getCardGrid(
+                stats_obj
+            )
+
+    def getCardGrid(stats_obj: Stats) -> any:
         """
         Defines and returns a grid of cards to display stats on.
         """
         row1 = dbc.Row(
             [
-                generalComponents.createCard("Time in Range", "Value"),
-                generalComponents.createCard("Average mg/dL", "Value"),
+                generalComponents.createCard("Time in Range", stats_obj.tir),
+                generalComponents.createCard("Average mg/dL", stats_obj.avgBG),
             ]
         )
 
         row2 = dbc.Row(
             [
-                generalComponents.createCard("Highest Avg. Day", "Value"),
-                generalComponents.createCard("Lowest Avg. Day", "Value"),
+                generalComponents.createCard("Highest Avg. Day", stats_obj.highestDay),
+                generalComponents.createCard("Lowest Avg. Day", stats_obj.lowestDay),
             ]
         )
 
         row3 = dbc.Row(
             [
-                generalComponents.createCard("Carbs Consumed", "Value"),
-                generalComponents.createCard("Insulin Dosed", "Value"),
+                generalComponents.createCard("Carbs Consumed", stats_obj.carbsConsumed),
+                generalComponents.createCard("Insulin Dosed", stats_obj.insulinTotal),
             ]
         )
 
-        grid = html.Div([html.Br(), row1, html.Br(), row2, html.Br(), row3, html.Br()])
+        grid = [html.Br(), row1, html.Br(), row2, html.Br(), row3, html.Br()]
         return grid
