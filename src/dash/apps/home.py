@@ -26,7 +26,7 @@ def serve_layout() -> list:
                     id="main-container",
                     children=[
                         mainContainer.getButtonGroup(),
-                        html.Br(style={"margin": "10px"}),
+                        html.Br(style={"margin": "35px"}),
                         mainContainer.getCardRow(),
                     ],
                     width=8,
