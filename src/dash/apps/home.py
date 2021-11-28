@@ -9,7 +9,6 @@ import dash_bootstrap_components as dbc
 
 # Internal Application Imports
 from app import app
-from src.data.update import metrics
 from src.pipelines.pipelines import WeeklyDataPipeline
 from src.statistics.statistics import Stats
 
@@ -314,6 +313,21 @@ class sidebarContainer:
                                 ),
                             ],
                             width=8,
+                        ),
+                        dbc.Col(
+                            [
+                                html.Img(
+                                    id="refresh-icon",
+                                    src=app.get_asset_url(
+                                        "images/update_black_48dp.svg",
+                                    ),
+                                    style={
+                                        "height": "30px",
+                                        "padding-bottom": "13px",
+                                    },
+                                ),
+                            ],
+                            width=3,
                         ),
                         # TODO: This is where the toast notification column will go
                         dbc.Col(
