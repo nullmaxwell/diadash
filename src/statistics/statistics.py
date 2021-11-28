@@ -70,7 +70,12 @@ class Stats:
             df["Sensor Glucose (mg/dL)"].median()
         )
         temp = temp < low_bound
-        count = temp.value_counts()[True]
+        try:
+            count = temp.value_counts()[True]
+        except KeyError:
+            print("True key not found while calculating time low.")
+            return "NaN"
+
         percent = int(round(count / len(temp), 2) * 100)
         return str(percent) + "%"
 
