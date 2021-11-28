@@ -260,27 +260,78 @@ class sidebarContainer:
 
         bg_bounds_form = dbc.Row(
             [
-                dbc.Col(
+                dbc.Row(
                     [
-                        dbc.FormFloating(
-                            [
-                                dbc.Input(type="bg-lower-bound", placeholder=120),
-                                dbc.Label("mg/dL lower bound"),
-                            ]
-                        )
+                        dbc.Label(
+                            "Target Blood Sugar Range (mg/dL)", html_for="bg-slider"
+                        ),
+                        dcc.RangeSlider(
+                            id="bg-target-slider",
+                            min=70,
+                            max=200,
+                            step=5,
+                            value=[80, 150],
+                            allowCross=False,
+                            tooltip={"placement": "bottom", "always_visible": False},
+                            marks={
+                                70: {"label": "70 mg/dL"},
+                                200: {"label": "200 mg/dL"},
+                            },
+                        ),
                     ],
-                    width=6,
                 ),
-                dbc.Col(
+                html.Br(style={"margin": "20px"}),
+                dbc.Row(
                     [
-                        dbc.FormFloating(
+                        dbc.Col(
                             [
-                                dbc.Input(type="bg-upper-bound", placeholder=120),
-                                dbc.Label("mg/dL upper bound"),
-                            ]
-                        )
+                                dbc.FormFloating(
+                                    [
+                                        dbc.Input(
+                                            id="daily-basal-amount",
+                                            type="number",
+                                            placeholder=120,
+                                        ),
+                                        dbc.Label("Basal Units per day"),
+                                    ]
+                                ),
+                            ],
+                            width=8,
+                        ),
+                        # TODO: This is where the toast notification column will go
+                        dbc.Col(
+                            [
+                                dbc.Button(
+                                    id="refresh-button",
+                                    children=[
+                                        html.Img(
+                                            id="refresh-icon",
+                                            src=app.get_asset_url(
+                                                "images/update_black_48dp.svg",
+                                            ),
+                                            style={
+                                                "height": "30px",
+                                                "padding-bottom": "13px",
+                                            },
+                                        ),
+                                    ],
+                                    color="info",
+                                    className="d-flex justify-content-center",
+                                    type="button",
+                                    style={"width": "45px", "height": "45px"},
+                                    n_clicks=0,
+                                ),
+                            ],
+                            width=3,
+                        ),
+                    ]
+                ),
+                dbc.Row(
+                    [
+                        html.Br(),
+                        # TODO: Add information toast explaining how to use this stuff.
                     ],
-                    width=6,
+                    className="d-flex justify-content-center",
                 ),
             ]
         )
