@@ -1,6 +1,5 @@
 import pandas as pd
 from datetime import date
-from src.data.update import cleaned_dict
 
 
 class Stats:
@@ -8,7 +7,9 @@ class Stats:
     Class to house and update all of the stat card values.
     """
 
-    def __init__(self, low_bound: int, high_bound: int) -> None:
+    def __init__(self, cleaned_dict: dict, low_bound: int, high_bound: int) -> None:
+        # TODO: Change these to setX methods.
+        self.reference_dict = cleaned_dict
         self.tir = Stats.getTimeInRange(cleaned_dict["chunk3"], low_bound, high_bound)
         self.timeHigh = Stats.getTimeHigh(cleaned_dict["chunk3"], high_bound)
         self.timeLow = Stats.getTimeLow(cleaned_dict["chunk3"], low_bound)
@@ -19,19 +20,20 @@ class Stats:
             cleaned_dict["chunk3"], low_bound, high_bound
         )
         self.carbsConsumed = Stats.getCarbsConsumed(cleaned_dict["chunk1"])
-        self.bolusTotal = Stats.getBolusTotal(cleaned_dict["chunk1"])
+        self.insulinTotal = Stats.getInsulinTotal(cleaned_dict["chunk1"])
         pass
 
     def updateAll(self, low_bound: int, high_bound: int) -> bool:
         """
-        Updates
         Updates dependent bound-dependent metrics using the stored dict.
         """
-        self.tir = Stats.getTimeInRange(cleaned_dict["chunk3"], low_bound, high_bound)
-        self.timeHigh = Stats.getTimeHigh(cleaned_dict["chunk3"], high_bound)
-        self.timeLow = Stats.getTimeLow(cleaned_dict["chunk3"], low_bound)
+        self.tir = Stats.getTimeInRange(
+            self.reference_dict["chunk3"], low_bound, high_bound
+        )
+        self.timeHigh = Stats.getTimeHigh(self.reference_dict["chunk3"], high_bound)
+        self.timeLow = Stats.getTimeLow(self.reference_dict["chunk3"], low_bound)
         self.longestStint = Stats.getLongestStint(
-            cleaned_dict["chunk3"], low_bound, high_bound
+            self.reference_dict["chunk3"], low_bound, high_bound
         )
         pass
 
@@ -102,7 +104,7 @@ class Stats:
                 ret_dict["Date"] = pd.Timestamp(day).strftime("%A %m-%d")
                 ret_dict["Value"] = found_value
 
-        return ret_dict["Date"] + " " + str(ret_dict["Value"])
+        return ret_dict["Date"] + "; " + str(ret_dict["Value"]) + "mg/dL"
 
     def getLowestDay(df: pd.DataFrame) -> str:
         """
@@ -127,7 +129,7 @@ class Stats:
                 ret_dict["Date"] = pd.Timestamp(day).strftime("%A %m-%d")
                 ret_dict["Value"] = found_value
 
-        return ret_dict["Date"] + " " + str(ret_dict["Value"])
+        return ret_dict["Date"] + "; " + str(ret_dict["Value"]) + "mg/dL"
 
     def getLongestStint(df: pd.DataFrame, lower_bound: int, upper_bound: int) -> str:
         """
@@ -150,10 +152,9 @@ class Stats:
             else:
                 stop = pd.Timestamp.combine(row["Date"], row["Time"])
                 duration = pd.to_timedelta(stop - start, unit="hours")
-                print(duration)
                 start = stop
 
-        # do string formatting on duration before exiting
+        # TODO: do string formatting on duration before exiting
         return duration.components
 
     def getCarbsConsumed(df: pd.DataFrame) -> str:
@@ -161,7 +162,7 @@ class Stats:
         total = df["BWZ Carb Input (grams)"].sum().item()
         return str(total) + "g"
 
-    def getBolusTotal(df: pd.DataFrame) -> str:
+    def getInsulinTotal(df: pd.DataFrame) -> str:
         """ """
         total = int(df["Bolus Volume Delivered (U)"].sum())
         return str(total) + "U"
