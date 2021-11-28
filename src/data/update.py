@@ -39,12 +39,8 @@ def main(user, token):
     except:
         raise
     finally:
-        """
-        TODO:
-        1. Run data pipeline
-        2. Calculate statistics
-        """
-        # cleaned_dict = WeeklyDataPipeline.pipe()
+        # TODO: Change this to logging.
+        print("Data successfully downloaded and handled...")
         pass
 
 
