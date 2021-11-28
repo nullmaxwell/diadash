@@ -133,8 +133,7 @@ def onLoginClick(n_clicks, user, token) -> any:
         )
     else:
         try:
-            # update.main(user, token)
-            time.sleep(2)  # to sim something happening in background
+            update.main(user, token)
             return dbc.Alert(
                 dcc.Link(
                     "Data download successful!\n\nClick here to continue to the dashboard.",
