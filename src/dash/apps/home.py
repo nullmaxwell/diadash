@@ -279,7 +279,7 @@ class sidebarContainer:
                     "\nDefine your target blood sugar range with the slider above then input your daily basal dosage."
                 ),
                 html.P(
-                    "\n You can then click the refresh button to the right to update the statistics."
+                    "\n You can then click the refresh button to the left to update the statistics on the cards."
                 ),
             ],
             style={
@@ -332,6 +332,31 @@ class sidebarContainer:
                         ),
                         dbc.Col(
                             [
+                                dbc.Button(
+                                    id="refresh-button",
+                                    children=[
+                                        html.Img(
+                                            id="refresh-icon",
+                                            src=app.get_asset_url(
+                                                "images/update_black_48dp.svg",
+                                            ),
+                                            style={
+                                                "height": "30px",
+                                                "padding-bottom": "13px",
+                                            },
+                                        ),
+                                    ],
+                                    color="info",
+                                    className="d-flex justify-content-center",
+                                    type="button",
+                                    style={"width": "45px", "height": "45px"},
+                                    n_clicks=0,
+                                ),
+                            ],
+                            width=2,
+                        ),
+                        dbc.Col(
+                            [
                                 html.Img(
                                     id="info-icon",
                                     src=app.get_asset_url(
@@ -356,32 +381,6 @@ class sidebarContainer:
                             ],
                             width=2,
                             className="d-flex justify-content-center",
-                        ),
-                        # TODO: This is where the toast notification column will go
-                        dbc.Col(
-                            [
-                                dbc.Button(
-                                    id="refresh-button",
-                                    children=[
-                                        html.Img(
-                                            id="refresh-icon",
-                                            src=app.get_asset_url(
-                                                "images/update_black_48dp.svg",
-                                            ),
-                                            style={
-                                                "height": "30px",
-                                                "padding-bottom": "13px",
-                                            },
-                                        ),
-                                    ],
-                                    color="info",
-                                    className="d-flex justify-content-center",
-                                    type="button",
-                                    style={"width": "45px", "height": "45px"},
-                                    n_clicks=0,
-                                ),
-                            ],
-                            width=2,
                         ),
                     ]
                 ),
