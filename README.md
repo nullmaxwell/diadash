@@ -38,7 +38,9 @@ Desired flow (to be completed):
 5. View Dashboard
 
 ## Screenshots
-Placeholder
+![Login Page](docs/images/login.png)
+![Main Dashboard*](docs/images/main.png) 
+*WIP
 
 ## To Do
 - Populate data 
