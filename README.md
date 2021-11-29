@@ -34,8 +34,7 @@ Desired flow (to be completed):
 1. Launch the app with Docker
 2. Navigate to URL
 3. Provide Medtronic Credentials
-4. Download data
-5. View Dashboard
+4. View Dashboard
 
 ## Screenshots
 ![Login Page](docs/images/login.png)
@@ -43,11 +42,8 @@ Desired flow (to be completed):
 *WIP
 
 ## To Do
-- Populate data 
 - Create graphs
-- Finish Sidebar header
 - Create third view to replace "Unknown View"
-- Create metrics class
 - Make Dockerfile
 
 --------
