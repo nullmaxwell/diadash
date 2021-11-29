@@ -1,5 +1,4 @@
 # Dash specific imports.
-from typing import Type
 from dash import dcc
 from dash import html
 from dash_bootstrap_components._components.Row import Row
@@ -274,6 +273,23 @@ class sidebarContainer:
         """
         title = html.H3("Stats at a Glance", style={"text-align": "center"})
 
+        explanation = html.Div(
+            [
+                html.P(
+                    "\nDefine your target blood sugar range with the slider above then input your daily basal dosage."
+                ),
+                html.P(
+                    "\n You can then click the refresh button to the right to update the statistics."
+                ),
+            ],
+            style={
+                "margin-top": "15px",
+                "margin-bottom": "15px",
+                "margin-left": "15px",
+                "margin-right": "15px",
+            },
+        )
+
         bg_bounds_form = dbc.Row(
             [
                 dbc.Row(
@@ -324,6 +340,17 @@ class sidebarContainer:
                                     style={
                                         "height": "35px",
                                         "padding-top": "18px",
+                                    },
+                                ),
+                                dbc.Popover(
+                                    explanation,
+                                    target="info-icon",
+                                    trigger="hover",
+                                    style={
+                                        "margin-top": "15px",
+                                        "margin-bottom": "15px",
+                                        "margin-left": "15px",
+                                        "margin-right": "15px",
                                     },
                                 ),
                             ],
