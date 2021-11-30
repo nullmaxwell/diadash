@@ -444,22 +444,22 @@ class sidebarContainer:
         """
         row1 = dbc.Row(
             [
-                generalComponents.createCard("Time in Range", stats_obj.tir),
-                generalComponents.createCard("Average mg/dL", stats_obj.avgBG),
-            ]
-        )
-
-        row2 = dbc.Row(
-            [
                 generalComponents.createCard("Highest Avg. Day", stats_obj.highestDay),
                 generalComponents.createCard("Lowest Avg. Day", stats_obj.lowestDay),
             ]
         )
 
-        row3 = dbc.Row(
+        row2 = dbc.Row(
             [
                 generalComponents.createCard("Carbs Consumed", stats_obj.carbsConsumed),
                 generalComponents.createCard("Insulin Dosed", stats_obj.insulinTotal),
+            ]
+        )
+
+        row3 = dbc.Row(
+            [
+                generalComponents.createCard("Longest in range", "NaN"),
+                generalComponents.createCard("Longest out of range", "NaN"),
             ]
         )
 
