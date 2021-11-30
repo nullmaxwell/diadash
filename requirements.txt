@@ -17,5 +17,7 @@ ipykernel
 selenium
 pandas
 dash
+plotly
+nbformat
 dash_bootstrap_components
 dash_bootstrap_templates
