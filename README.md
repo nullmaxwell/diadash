@@ -42,6 +42,9 @@ Desired flow (to be completed):
 *WIP
 
 ## To Do
+- Populate data 
+- Add metric card for estimated reservoir amount
+- Add metric card for longest stint out of range
 - Create graphs
 - Create third view to replace "Unknown View"
 - Make Dockerfile
