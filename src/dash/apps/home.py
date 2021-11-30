@@ -218,9 +218,16 @@ class mainContainer:
         Defines and returns the weekly view of the plot.
         """
 
-        tab1_content = mainContainer.getTestPlot()
-        tab2_content = None
-        tab3_content = None
+        global PROCESSED_DATA
+
+        if PROCESSED_DATA == None:
+            tab1_content = None
+            tab2_content = None
+            tab3_content = None
+        else:
+            tab1_content = mainContainer.getTestPlot()
+            tab2_content = None
+            tab3_content = None
 
         tabs = dbc.Tabs(
             [
