@@ -79,9 +79,7 @@ class generalComponents:
                                     width=2,
                                 ),
                                 dbc.Col(
-                                    dbc.NavbarBrand(
-                                        "DiaDash Application", className="ms-2"
-                                    ),
+                                    dbc.NavbarBrand("DiaDash", className="ms-2"),
                                     width=6,
                                 ),
                             ],
