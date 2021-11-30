@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 """
 This may be converted into a class at some point.
@@ -42,5 +43,30 @@ def getLinePlot(df: pd.DataFrame) -> any:
         y1=180,
         line=dict(color="Orange"),
     )
+
+    return fig
+
+
+def getViolinPlot(df: pd.DataFrame) -> any:
+    """
+    Creates and returns a violin plot for each day in the data.
+    Note: This plot may need to omit the day on which the data was pulled.
+    """
+    days = df["Date"].unique()
+
+    fig = go.Figure()
+
+    for day in days:
+        window = df.loc[df["Date"] == pd.Timestamp(day)]
+
+        fig.add_trace(
+            go.Violin(
+                x=window["Date"],
+                y=window["Sensor Glucose (mg/dL)"],
+                name=pd.Timestamp(day).strftime("%A %m/%d"),
+                box_visible=True,
+                meanline_visible=True,
+            )
+        )
 
     return fig
