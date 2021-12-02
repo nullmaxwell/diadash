@@ -6,6 +6,17 @@ import plotly.graph_objects as go
 This may be converted into a class at some point.
 """
 
+color_bank = [
+    "lightseagreen",
+    "purple",
+    "pink",
+    "orange",
+    "lightblue",
+    "red",
+    "brown",
+    "grey",
+]
+
 
 def combineTimeAndDate(date, time) -> any:
     """
@@ -62,18 +73,10 @@ def getViolinPlot(df: pd.DataFrame) -> any:
     Creates and returns a violin plot for each day in the data.
     Note: This plot may need to omit the day on which the data was pulled.
     """
-    days = df["Date"].unique()
+    global color_bank
+    colors = color_bank.copy()
 
-    colors = [
-        "lightseagreen",
-        "purple",
-        "pink",
-        "orange",
-        "lightblue",
-        "red",
-        "brown",
-        "grey",
-    ]
+    days = df["Date"].unique()
 
     fig = go.Figure()
 
@@ -114,6 +117,8 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
     Creates and returns a violin plot for each day in the data.
     Note: This plot may need to omit the day on which the data was pulled.
     """
+    global color_bank
+    colors = color_bank.copy()
 
     days = df["Date"].unique()
 
@@ -142,6 +147,7 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
             x=window["Time"],
             y=window["Sensor Glucose (mg/dL)"],
             name=pd.Timestamp(day).strftime("%A %m/%d"),
+            line_color=colors.pop(),
         )
 
     # fig.update_xaxes(
