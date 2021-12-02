@@ -74,12 +74,11 @@ class Stats:
         temp = temp < low_bound
         try:
             count = temp.value_counts()[True]
+            percent = int(round(count / len(temp), 2) * 100)
+            return str(percent) + "%"
         except KeyError:
             # This is the scenario in which no low values are found in the dataset.
             return "0%"
-
-        percent = int(round(count / len(temp), 2) * 100)
-        return str(percent) + "%"
 
     def getAvgBG(df: pd.DataFrame) -> str:
         """
