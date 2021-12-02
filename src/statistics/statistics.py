@@ -180,3 +180,9 @@ class Stats:
         basal_total = basal_rate * 6
         total = int(df["Bolus Volume Delivered (U)"].sum()) + basal_total
         return "~" + str(total) + " Units"
+
+    def getEstimatedA1C(df: pd.DataFrame) -> str:
+        """
+        Placeholder function for calculating the estimated A1C for the week.
+        """
+        pass

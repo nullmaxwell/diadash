@@ -44,7 +44,7 @@ Desired flow (to be completed):
 ## To Do
 - Populate data 
 - Add metric card for estimated reservoir amount
-- Add metric card for longest stint out of range
+- Add metric for projected A1C
 - Create graphs
 - Create third view to replace "Unknown View"
 - Make Dockerfile
