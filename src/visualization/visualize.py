@@ -24,7 +24,12 @@ def getLinePlot(df: pd.DataFrame) -> any:
         lambda x: combineTimeAndDate(*x), axis=1
     )
 
-    fig = px.line(df, x="Date and Time", y="Sensor Glucose (mg/dL)")
+    fig = px.line(
+        df,
+        x="Date and Time",
+        y="Sensor Glucose (mg/dL)",
+        title="7 Day Sensor Glucose History",
+    )
 
     fig.add_shape(
         type="line",
