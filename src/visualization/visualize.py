@@ -14,6 +14,11 @@ def combineTimeAndDate(date, time) -> any:
     return pd.Timestamp.combine(date, time)
 
 
+"""
+Weekly View Plots
+"""
+
+
 def getWeeklyLinePlot(df: pd.DataFrame) -> any:
     """
     Creates and returns a line plot of all blood sugar data.
@@ -79,6 +84,100 @@ def getViolinPlot(df: pd.DataFrame) -> any:
             title="7 Blood Glucose Range by Day",
             yaxis_title="Sensor Glucose (mg/dL)",
             xaxis_title="Date",
+        )
+    )
+
+    return fig
+
+
+"""
+Daily View Plots
+"""
+
+
+def getDailyLinePlot(df: pd.DataFrame) -> any:
+    """
+    Creates and returns a violin plot for each day in the data.
+    Note: This plot may need to omit the day on which the data was pulled.
+    """
+
+    days = df["Date"].unique()
+
+    fig = go.Figure()
+
+    fig.add_shape(
+        type="rect",
+        x0=min(df["Time"]),
+        y0=80,
+        x1=max(df["Time"]),
+        y1=180,
+        line=dict(
+            color="LightGreen",
+            width=2,
+        ),
+        fillcolor="LightGreen",
+        opacity=0.30,
+    )
+
+    for day in days:
+        window = df.loc[df["Date"] == pd.Timestamp(day)]
+        # window = window.sort_values(["Date", "Time"], ascending=(True, True))
+        window = window.sort_values(["Time"], ascending=(True))
+
+        fig.add_scatter(
+            x=window["Time"],
+            y=window["Sensor Glucose (mg/dL)"],
+            name=pd.Timestamp(day).strftime("%A %m/%d"),
+        )
+
+    # fig.update_xaxes(
+    #     dict(
+    #         type="category",
+    #         categoryorder="category ascending",
+    #         tickangle = 45,
+    #         tickformat="%H:00",
+    #         tickmode="auto",
+    #         tickson="boundaries",
+    #         nticks=8,
+    #         tick0= time(hour=0, minute=0),
+    #         dtick=time(hour=3, minute=0),
+    #     )
+    # )
+
+    fig.update_xaxes(
+        dict(
+            type="category",
+            categoryorder="category ascending",
+            tickangle=45,
+            tickformat="%H\n:00",
+            tickmode="auto",
+            nticks=8,
+        )
+    )
+
+    # This will need to be changed into a single shape (shaded box)
+    fig.add_shape(
+        type="line",
+        x0=min(df["Time"]),
+        y0=80,
+        x1=max(df["Time"]),
+        y1=80,
+        line=dict(color="Red"),
+    )
+
+    fig.add_shape(
+        type="line",
+        x0=min(df["Time"]),
+        y0=180,
+        x1=max(df["Time"]),
+        y1=180,
+    )
+
+    fig.update_layout(
+        dict(
+            title="Daily Sensor Glucose",
+            yaxis_title="Sensor Glucose (mg/dL)",
+            xaxis_title="Time",
         )
     )
 
