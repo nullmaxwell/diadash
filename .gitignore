@@ -90,3 +90,4 @@ target/
 
 # Credentials
 src/credentials/credentials.json
+notebooks/02_plotting.ipynb

@@ -79,9 +79,7 @@ class generalComponents:
                                     width=2,
                                 ),
                                 dbc.Col(
-                                    dbc.NavbarBrand(
-                                        "DiaDash Application", className="ms-2"
-                                    ),
+                                    dbc.NavbarBrand("DiaDash", className="ms-2"),
                                     width=6,
                                 ),
                             ],
@@ -220,9 +218,16 @@ class mainContainer:
         Defines and returns the weekly view of the plot.
         """
 
-        tab1_content = mainContainer.getTestPlot()
-        tab2_content = None
-        tab3_content = None
+        global PROCESSED_DATA
+
+        if PROCESSED_DATA == None:
+            tab1_content = None
+            tab2_content = None
+            tab3_content = None
+        else:
+            tab1_content = mainContainer.getTestPlot()
+            tab2_content = None
+            tab3_content = None
 
         tabs = dbc.Tabs(
             [
@@ -444,22 +449,22 @@ class sidebarContainer:
         """
         row1 = dbc.Row(
             [
-                generalComponents.createCard("Time in Range", stats_obj.tir),
-                generalComponents.createCard("Average mg/dL", stats_obj.avgBG),
-            ]
-        )
-
-        row2 = dbc.Row(
-            [
                 generalComponents.createCard("Highest Avg. Day", stats_obj.highestDay),
                 generalComponents.createCard("Lowest Avg. Day", stats_obj.lowestDay),
             ]
         )
 
-        row3 = dbc.Row(
+        row2 = dbc.Row(
             [
                 generalComponents.createCard("Carbs Consumed", stats_obj.carbsConsumed),
                 generalComponents.createCard("Insulin Dosed", stats_obj.insulinTotal),
+            ]
+        )
+
+        row3 = dbc.Row(
+            [
+                generalComponents.createCard("Longest in range", "NaN"),
+                generalComponents.createCard("Longest out of range", "NaN"),
             ]
         )
 

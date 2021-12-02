@@ -75,8 +75,8 @@ class Stats:
         try:
             count = temp.value_counts()[True]
         except KeyError:
-            print("True key not found while calculating time low.")
-            return "NaN"
+            # This is the scenario in which no low values are found in the dataset.
+            return "0%"
 
         percent = int(round(count / len(temp), 2) * 100)
         return str(percent) + "%"
