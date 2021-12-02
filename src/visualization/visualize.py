@@ -14,7 +14,7 @@ def combineTimeAndDate(date, time) -> any:
     return pd.Timestamp.combine(date, time)
 
 
-def getLinePlot(df: pd.DataFrame) -> any:
+def getWeeklyLinePlot(df: pd.DataFrame) -> any:
     """
     Creates and returns a line plot of all blood sugar data.
     """
