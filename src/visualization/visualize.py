@@ -64,6 +64,17 @@ def getViolinPlot(df: pd.DataFrame) -> any:
     """
     days = df["Date"].unique()
 
+    colors = [
+        "lightseagreen",
+        "purple",
+        "pink",
+        "orange",
+        "lightblue",
+        "red",
+        "brown",
+        "grey",
+    ]
+
     fig = go.Figure()
 
     for day in days:
@@ -76,6 +87,9 @@ def getViolinPlot(df: pd.DataFrame) -> any:
                 name=pd.Timestamp(day).strftime("%A %m/%d"),
                 box_visible=True,
                 meanline_visible=True,
+                line_color="black",
+                fillcolor=colors.pop(),
+                opacity=0.6,
             )
         )
 
