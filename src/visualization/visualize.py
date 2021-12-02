@@ -74,6 +74,12 @@ def getViolinPlot(df: pd.DataFrame) -> any:
             )
         )
 
-    fig.update_layout(dict(title="7 Blood Glucose Range by Day"))
+    fig.update_layout(
+        dict(
+            title="7 Blood Glucose Range by Day",
+            yaxis_title="Sensor Glucose (mg/dL)",
+            xaxis_title="Date",
+        )
+    )
 
     return fig
