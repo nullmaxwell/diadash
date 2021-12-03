@@ -10,6 +10,7 @@ import dash_bootstrap_components as dbc
 from app import app
 from src.pipelines.pipelines import WeeklyDataPipeline
 from src.statistics.statistics import Stats
+from src.visualization import visualize
 
 # Other imports
 import pandas as pd
@@ -231,9 +232,9 @@ class mainContainer:
 
         tabs = dbc.Tabs(
             [
-                dbc.Tab(tab1_content, label="Line Plot"),
-                dbc.Tab(tab2_content, label="Violin Plot"),
-                dbc.Tab(tab3_content, label="Heat Map"),
+                dbc.Tab(tab1_content, label="Weekly Glucose Overview"),
+                dbc.Tab(tab2_content, label="Weekly Statistics Overview"),
+                # dbc.Tab(tab3_content, label="Placeholder"),
             ]
         )
 
@@ -243,7 +244,26 @@ class mainContainer:
         """
         Defines and returns the daily view of the plot.
         """
-        pass
+        global PROCESSED_DATA
+
+        if PROCESSED_DATA == None:
+            tab1_content = None
+            tab2_content = None
+            tab3_content = None
+        else:
+            tab1_content = mainContainer.getTestPlot()
+            tab2_content = None
+            tab3_content = None
+
+        tabs = dbc.Tabs(
+            [
+                dbc.Tab(tab1_content, label="Daily Overview"),
+                # dbc.Tab(tab2_content, label="Placeholder"),
+                # dbc.Tab(tab3_content, label="Placeholder"),
+            ]
+        )
+
+        return tabs
 
     def unknownView() -> any:
         """
