@@ -443,8 +443,8 @@ class sidebarContainer:
         """
         row1 = dbc.Row(
             [
-                generalComponents.createCard("Highest Avg. Day", stats_obj.highestDay),
-                generalComponents.createCard("Lowest Avg. Day", stats_obj.lowestDay),
+                generalComponents.createCard("Projected A1C", stats_obj.a1c),
+                generalComponents.createCard("Reservoir Estimate", stats_obj.lowestDay),
             ]
         )
 
@@ -457,8 +457,8 @@ class sidebarContainer:
 
         row3 = dbc.Row(
             [
-                generalComponents.createCard("Longest in range", "NaN"),
-                generalComponents.createCard("Longest out of range", "NaN"),
+                generalComponents.createCard("Highest Avg. Day", stats_obj.highestDay),
+                generalComponents.createCard("Lowest Avg. Day", stats_obj.lowestDay),
             ]
         )
 
