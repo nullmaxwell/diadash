@@ -140,20 +140,6 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
 
     fig = go.Figure()
 
-    fig.add_shape(
-        type="rect",
-        x0=min(df["Time"]),
-        y0=80,
-        x1=max(df["Time"]),
-        y1=180,
-        line=dict(
-            color="LightGreen",
-            width=2,
-        ),
-        fillcolor="LightGreen",
-        opacity=0.30,
-    )
-
     for day in days:
         window = df.loc[df["Date"] == pd.Timestamp(day)]
         # window = window.sort_values(["Date", "Time"], ascending=(True, True))
@@ -207,6 +193,20 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
         y0=180,
         x1=max(df["Time"]),
         y1=180,
+    )
+
+    fig.add_shape(
+        type="rect",
+        x0=min(df["Time"]),
+        y0=80,
+        x1=max(df["Time"]),
+        y1=180,
+        line=dict(
+            color="LightGreen",
+            width=2,
+        ),
+        fillcolor="LightGreen",
+        opacity=0.30,
     )
 
     fig.update_layout(
