@@ -17,7 +17,7 @@ The major motivation for the dashboard is to, at a glance, have an understanding
 
 ## Important notes
 
-First and foremost, while this data is sourced directly from Medtronic's CareLink service which is synced with an insulin pump and the Medtronic CareLink app, *these metrics and visualizations are for reference purposes only and are not intended to justify medical decisions*. **Always consult your endocrinologist before making any changes to your diabetes care routine.**
+First and foremost, while this data is sourced directly from Medtronic's CareLink service which is synced with an insulin pump and the Medtronic CareLink app, *these metrics and visualizations are for reference purposes only and are not intended to justify medical decisions*. **Always consult an endocrinologist before making any changes to a diabetes care routine.**
 
 - **Projected A1C** - The metric card containing projected A1C is not an accurate estimation or representation of true A1C given that only 7 days of blood glucose data is available. It is only a representation of an A1C value of the previous 7 days and is intended to show the user a projection of an A1C value should the previous 7 days be characteristic of the next 3 months.
 
@@ -45,11 +45,14 @@ Desired flow (to be completed):
 
 ## Screenshots
 ![Login Page](docs/images/login.png)
-![Main Dashboard*](docs/images/main.png) 
+![Main Dashboard - Weekly Glucose Overview](docs/images/main_wgo.png) 
+![Main Dashboard - Weekly Statistics Overview](docs/images/main_wso.png)
+![Main Dashboard - Daily Overview](docs/images/main_do.png)
+![Main Dashboard - Other Overview](docs/images/main_other.png) 
+
 *WIP
 
 ## To Do
-- Third View will become insulin and carb overview.
 - Make Dockerfile
 
 --------
