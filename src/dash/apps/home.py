@@ -106,11 +106,12 @@ class generalComponents:
         )
         return navbar
 
-    def createCard(header: str, value: str) -> any:
+    def createCard(body_id: str, header: str, value: str, explanation: str) -> any:
         """
         Wrapper function that defines the content of a card
         based on a value and provided header.
         """
+
         content = [
             dbc.CardHeader(
                 header,
@@ -121,6 +122,7 @@ class generalComponents:
                 [
                     html.P(
                         value,
+                        id=body_id,
                         className="card-body align-items-center d-flex justify-content-center",
                         style={"height": "75px"},
                     )
@@ -128,14 +130,33 @@ class generalComponents:
             ),
         ]
 
+        explanation = html.Div(
+            [
+                html.P(explanation),
+            ],
+            style={
+                "margin-top": "15px",
+                "margin-bottom": "15px",
+                "margin-left": "15px",
+                "margin-right": "15px",
+            },
+        )
+
         card = dbc.Col(
-            dbc.Card(
-                content,
-                color="secondary",
-                outline=True,
-                className="card-body align-items-center d-flex justify-content-center",
-                style={"height": "190px", "width": "190px"},
-            )
+            [
+                dbc.Card(
+                    content,
+                    color="secondary",
+                    outline=True,
+                    className="card-body align-items-center d-flex justify-content-center",
+                    style={"height": "190px", "width": "190px"},
+                ),
+                dbc.Popover(
+                    explanation,
+                    target=body_id,
+                    trigger="hover",
+                ),
+            ]
         )
 
         return card
@@ -251,10 +272,30 @@ class mainContainer:
         """
         card_row = dbc.Row(
             [
-                generalComponents.createCard("Time in Range", stats_obj.tir),
-                generalComponents.createCard("Time high", stats_obj.timeHigh),
-                generalComponents.createCard("Time low", stats_obj.timeLow),
-                generalComponents.createCard("Average mg/dL", stats_obj.avgBG),
+                generalComponents.createCard(
+                    "card-value-tir",
+                    "Time in Range",
+                    stats_obj.tir,
+                    "The percent of time spent within the defined glucose range.",
+                ),
+                generalComponents.createCard(
+                    "card-value-tHigh",
+                    "Time high",
+                    stats_obj.timeHigh,
+                    "The percent of time spent above the defined upper bound.",
+                ),
+                generalComponents.createCard(
+                    "card-value-tLow",
+                    "Time low",
+                    stats_obj.timeLow,
+                    "The percent of time spent below the defined lower bound.",
+                ),
+                generalComponents.createCard(
+                    "card-value-avgBG",
+                    "Average mg/dL",
+                    stats_obj.avgBG,
+                    "Average blood glucose value among all data.",
+                ),
             ]
         )
 
@@ -370,12 +411,6 @@ class sidebarContainer:
                                     explanation,
                                     target="info-icon",
                                     trigger="hover",
-                                    style={
-                                        "margin-top": "15px",
-                                        "margin-bottom": "15px",
-                                        "margin-left": "15px",
-                                        "margin-right": "15px",
-                                    },
                                 ),
                             ],
                             width=2,
@@ -443,24 +478,52 @@ class sidebarContainer:
         """
         row1 = dbc.Row(
             [
-                generalComponents.createCard("Projected A1C", stats_obj.a1c),
                 generalComponents.createCard(
-                    "Reservoir Estimate", stats_obj.resEstimate
+                    "card-value-a1c",
+                    "Projected A1C",
+                    stats_obj.a1c,
+                    "A1C projected estimate based on 7 days of data. \nNote: This is not an accurate estimation or representation of true A1C given that only 7 days of blood glucose data are available.",
+                ),
+                generalComponents.createCard(
+                    "card-value-resEstimate",
+                    "Reservoir Estimate",
+                    stats_obj.resEstimate,
+                    "The estimated amount of insulin used in each reservoir assuming infusion sites are changed every 3 days.",
                 ),
             ]
         )
 
         row2 = dbc.Row(
             [
-                generalComponents.createCard("Carbs Consumed", stats_obj.carbsConsumed),
-                generalComponents.createCard("Insulin Dosed", stats_obj.insulinTotal),
+                generalComponents.createCard(
+                    "card-value-carbsCons",
+                    "Carbs Consumed",
+                    stats_obj.carbsConsumed,
+                    "The number of carbohydrates dosed for by the user.",
+                ),
+                generalComponents.createCard(
+                    "card-value-insTotal",
+                    "Insulin Dosed",
+                    stats_obj.insulinTotal,
+                    "The total amount of insulin used throughout the week including basal and bolus.",
+                ),
             ]
         )
 
         row3 = dbc.Row(
             [
-                generalComponents.createCard("Highest Avg. Day", stats_obj.highestDay),
-                generalComponents.createCard("Lowest Avg. Day", stats_obj.lowestDay),
+                generalComponents.createCard(
+                    "card-value-highDay",
+                    "Highest Avg. Day",
+                    stats_obj.highestDay,
+                    "Day of the week that had the highest average blood glucose levels.",
+                ),
+                generalComponents.createCard(
+                    "card-value-lowDay",
+                    "Lowest Avg. Day",
+                    stats_obj.lowestDay,
+                    "Day of the week that had the lowest average blood glucose levels.",
+                ),
             ]
         )
 
