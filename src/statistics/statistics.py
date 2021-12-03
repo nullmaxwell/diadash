@@ -21,6 +21,7 @@ class Stats:
             self.longestStint = "NaN"
             self.carbsConsumed = "NaN"
             self.insulinTotal = "NaN"
+            self.a1c = "NaN"
         else:
             self.tir = Stats.getTimeInRange(
                 cleaned_dict["chunk3"], low_bound, high_bound
@@ -37,6 +38,7 @@ class Stats:
             self.insulinTotal = Stats.getInsulinTotal(
                 cleaned_dict["chunk1"], basal_rate
             )
+            self.a1c = Stats.getProjectedA1C(cleaned_dict["chunk3"])
         pass
 
     def getTimeInRange(df: pd.DataFrame, low_bound: int, high_bound: int) -> str:
@@ -180,8 +182,30 @@ class Stats:
         total = int(df["Bolus Volume Delivered (U)"].sum()) + basal_total
         return "~" + str(total) + " Units"
 
-    def getEstimatedA1C(df: pd.DataFrame) -> str:
+    def getProjectedA1C(df: pd.DataFrame) -> str:
         """
-        Placeholder function for calculating the estimated A1C for the week.
+        Calculates an **projected** A1C based on blood glucose data.
+
+        Incredibly important note: This is not an accurate estimation
+        or representation of true A1C given that only 7 days of blood
+        glucose data is available. It is only a representation of an A1C
+        value of the previous 7 days and is intended to show the user a projection
+        of an A1C value should the previous 7 days be characteristic of the next
+        3 months.
+
+
+        Described as:
+        28.7 X A1C – 46.7 = eAG
+        therefore
+        (eAG + 46.7) / 28.7 = A1C
+        Equation was sourced from: https://care.diabetesjournals.org/content/diacare/early/2008/06/07/dc08-0545.full.pdf
+        See the description of table 2 on page 4.
         """
-        pass
+
+        eAG = df["Sensor Glucose (mg/dL)"].mean().astype("int32")
+        A1C = (eAG + 46.7) / 28.7
+
+        # Rounding for readability
+        A1C = round(A1C, 2)
+
+        return str(A1C) + "%*"
