@@ -42,11 +42,9 @@ Desired flow (to be completed):
 *WIP
 
 ## To Do
-- Populate data 
 - Add metric card for estimated reservoir amount
 - Add metric for projected A1C
-- Create graphs
-- Create third view to replace "Unknown View"
+- Third View will become insulin and carb overview.
 - Make Dockerfile
 
 --------
