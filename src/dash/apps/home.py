@@ -226,8 +226,8 @@ class mainContainer:
             tab2_content = None
             tab3_content = None
         else:
-            tab1_content = mainContainer.getTestPlot()
-            tab2_content = None
+            tab1_content = visualize.getWeeklyLinePlot(PROCESSED_DATA["chunk3"])
+            tab2_content = visualize.getViolinPlot(PROCESSED_DATA["chunk3"])
             tab3_content = None
 
         tabs = dbc.Tabs(
@@ -251,7 +251,7 @@ class mainContainer:
             tab2_content = None
             tab3_content = None
         else:
-            tab1_content = mainContainer.getTestPlot()
+            tab1_content = visualize.getDailyLinePlot(PROCESSED_DATA["chunk3"])
             tab2_content = None
             tab3_content = None
 
