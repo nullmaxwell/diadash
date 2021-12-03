@@ -444,7 +444,9 @@ class sidebarContainer:
         row1 = dbc.Row(
             [
                 generalComponents.createCard("Projected A1C", stats_obj.a1c),
-                generalComponents.createCard("Reservoir Estimate", stats_obj.lowestDay),
+                generalComponents.createCard(
+                    "Reservoir Estimate", stats_obj.resEstimate
+                ),
             ]
         )
 

@@ -22,6 +22,7 @@ class Stats:
             self.carbsConsumed = "NaN"
             self.insulinTotal = "NaN"
             self.a1c = "NaN"
+            self.resEstimate = "NaN"
         else:
             self.tir = Stats.getTimeInRange(
                 cleaned_dict["chunk3"], low_bound, high_bound
@@ -39,6 +40,9 @@ class Stats:
                 cleaned_dict["chunk1"], basal_rate
             )
             self.a1c = Stats.getProjectedA1C(cleaned_dict["chunk3"])
+            self.resEstimate = Stats.getReservoirEstimate(
+                cleaned_dict["chunk1"], basal_rate
+            )
         pass
 
     def getTimeInRange(df: pd.DataFrame, low_bound: int, high_bound: int) -> str:
@@ -209,3 +213,14 @@ class Stats:
         A1C = round(A1C, 2)
 
         return str(A1C) + "%*"
+
+    def getReservoirEstimate(df: pd.DataFrame, basal_rate: float) -> str:
+        """
+        Calculates and returns the estimated amount of insulin used every three days.
+        """
+        basal_total = basal_rate * 7
+        ins_total = int(df["Bolus Volume Delivered (U)"].sum()) + basal_total
+
+        resEstimate = ins_total / 3
+
+        return str(resEstimate) + "U per res."
