@@ -178,7 +178,7 @@ class Stats:
         `df`
         `basal_rate`: The basal rate defined in the form on the main app page.
         """
-        basal_total = basal_rate * 6
+        basal_total = basal_rate * 7
         total = int(df["Bolus Volume Delivered (U)"].sum()) + basal_total
         return "~" + str(total) + " Units"
 
