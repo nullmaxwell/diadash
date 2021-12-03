@@ -218,3 +218,41 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
     )
 
     return dcc.Graph(id="daily-line-plot", figure=fig)
+
+
+"""
+Other view plots.
+"""
+
+
+def getCarbInsulinPlot(df: pd.DataFrame) -> any:
+    """
+    Creates and returns a bar graph of insulin dosed and carbs consumed by day.
+    """
+
+    days = df["Date"].unique()
+    carb_sums = []
+    insulin_sums = []
+
+    for day in days:
+        window = df.loc[df["Date"] == pd.Timestamp(day)]
+        carb_sums.append(window["BWZ Carb Input (grams)"].sum().astype("int32"))
+        insulin_sums.append(window["Bolus Volume Delivered (U)"].sum().astype("int32"))
+
+    fig = go.Figure(
+        data=[
+            go.Bar(name="Carbs Consumed", x=days, y=carb_sums, marker_color="tan"),
+            go.Bar(name="Insulin Dosed", x=days, y=insulin_sums, marker_color="pink"),
+        ]
+    )
+
+    fig.update_layout(
+        dict(
+            barmode="group",
+            title="Carbs consumed vs. Insulin Dosed by Day",
+            yaxis_title="Value",
+            xaxis_title="Date",
+        )
+    )
+
+    return dcc.Graph(id="daily-line-plot", figure=fig)

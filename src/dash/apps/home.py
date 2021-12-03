@@ -36,7 +36,7 @@ def serve_layout() -> list:
                     id="main-container",
                     children=[
                         mainContainer.getButtonGroup(),
-                        html.Br(style={"margin": "53px"}),
+                        html.Br(style={"margin": "50px"}),
                         dbc.Row(id="card-row"),
                     ],
                     width=8,
@@ -77,7 +77,7 @@ class generalComponents:
                                             "images/space_dashboard_black_48dp.svg"
                                         ),
                                     ),
-                                    width=2,
+                                    width=6,
                                 ),
                                 dbc.Col(
                                     dbc.NavbarBrand("DiaDash", className="ms-2"),
@@ -183,7 +183,7 @@ class mainContainer:
                     options=[
                         {"label": "Weekly View", "value": 1},
                         {"label": "Daily View", "value": 2},
-                        {"label": "Unknown View", "value": 3},
+                        {"label": "Other", "value": 3},
                     ],
                     value=1,
                     labelStyle={"display": "inline-block"},
@@ -206,7 +206,7 @@ class mainContainer:
         elif value == 2:
             return mainContainer.getDailyView()
         elif value == 3:
-            return mainContainer.unknownView()
+            return mainContainer.otherView()
         pass
 
     def getWeeklyView() -> any:
@@ -260,11 +260,29 @@ class mainContainer:
 
         return tabs
 
-    def unknownView() -> any:
+    def otherView() -> any:
         """
         A yet to be determined view. This is a placeholder function for the time being.
         """
-        pass
+        global PROCESSED_DATA
+
+        if PROCESSED_DATA == None:
+            tab1_content = None
+            tab2_content = None
+            tab3_content = None
+        else:
+            tab1_content = visualize.getCarbInsulinPlot(PROCESSED_DATA["chunk1"])
+            tab2_content = None
+            tab3_content = None
+
+        tabs = dbc.Tabs(
+            [
+                dbc.Tab(tab1_content, label="Carb and Insulin Overview"),
+                # dbc.Tab(tab2_content, label="Placeholder"),
+                # dbc.Tab(tab3_content, label="Placeholder"),
+            ]
+        )
+        return tabs
 
     def getCardRow(stats_obj: Stats) -> any:
         """
@@ -404,7 +422,7 @@ class sidebarContainer:
                                     ),
                                     style={
                                         "height": "35px",
-                                        "padding-top": "18px",
+                                        "padding-top": "15px",
                                     },
                                 ),
                                 dbc.Popover(
