@@ -67,6 +67,20 @@ def getWeeklyLinePlot(df: pd.DataFrame) -> any:
         line=dict(color="Orange"),
     )
 
+    fig.add_shape(
+        type="rect",
+        x0=min(df["Date and Time"]),
+        y0=80,
+        x1=max(df["Date and Time"]),
+        y1=180,
+        line=dict(
+            color="LightGreen",
+            width=2,
+        ),
+        fillcolor="LightGreen",
+        opacity=0.30,
+    )
+
     return dcc.Graph(id="weekly-line-plot", figure=fig)
 
 
