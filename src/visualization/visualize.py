@@ -193,6 +193,7 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
         y0=180,
         x1=max(df["Time"]),
         y1=180,
+        line=dict(color="Brown"),
     )
 
     fig.add_shape(
@@ -256,3 +257,31 @@ def getCarbInsulinPlot(df: pd.DataFrame) -> any:
     )
 
     return dcc.Graph(id="daily-line-plot", figure=fig)
+
+
+def getViolinDistPlot(df: pd.DataFrame) -> any:
+    """
+    Creates and returns a violin plot for all blood glucose data.
+    """
+
+    fig = go.Figure(
+        data=go.Violin(
+            y=df["Sensor Glucose (mg/dL)"],
+            box_visible=True,
+            line_color="black",
+            meanline_visible=True,
+            fillcolor="lightseagreen",
+            opacity=0.6,
+            x0="Sensor Glucose",
+            points="outliers",
+        )
+    )
+
+    fig.update_layout(
+        dict(
+            title="Sensor Glucose Distribution",
+            yaxis_title="mg/dL",
+        )
+    )
+
+    return dcc.Graph(id="total-violin-plot", figure=fig)

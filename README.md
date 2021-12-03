@@ -48,7 +48,9 @@ Desired flow (to be completed):
 ![Main Dashboard - Weekly Glucose Overview](docs/images/main_wgo.png) 
 ![Main Dashboard - Weekly Statistics Overview](docs/images/main_wso.png)
 ![Main Dashboard - Daily Overview](docs/images/main_do.png)
-![Main Dashboard - Other Overview](docs/images/main_other.png) 
+![Main Dashboard - Other Overall Distribution](docs/images/main_ood.png) 
+![Main Dashboard - Other Carb and Insulin Intake](docs/images/main_oi.png) 
+
 
 *WIP
 

@@ -271,14 +271,14 @@ class mainContainer:
             tab2_content = None
             tab3_content = None
         else:
-            tab1_content = visualize.getCarbInsulinPlot(PROCESSED_DATA["chunk1"])
-            tab2_content = None
+            tab1_content = visualize.getViolinDistPlot(PROCESSED_DATA["chunk3"])
+            tab2_content = visualize.getCarbInsulinPlot(PROCESSED_DATA["chunk1"])
             tab3_content = None
 
         tabs = dbc.Tabs(
             [
-                dbc.Tab(tab1_content, label="Carb and Insulin Overview"),
-                # dbc.Tab(tab2_content, label="Placeholder"),
+                dbc.Tab(tab1_content, label="Overall Distribution"),
+                dbc.Tab(tab2_content, label="Carb and Insulin Intake"),
                 # dbc.Tab(tab3_content, label="Placeholder"),
             ]
         )
