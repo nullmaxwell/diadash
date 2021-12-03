@@ -1,6 +1,8 @@
 import pandas as pd
+from dash import dcc
 import plotly.express as px
 import plotly.graph_objects as go
+
 
 """
 This may be converted into a class at some point.
@@ -65,7 +67,7 @@ def getWeeklyLinePlot(df: pd.DataFrame) -> any:
         line=dict(color="Orange"),
     )
 
-    return fig
+    return dcc.Graph(id="weekly-line-plot", figure=fig)
 
 
 def getViolinPlot(df: pd.DataFrame) -> any:
@@ -104,7 +106,7 @@ def getViolinPlot(df: pd.DataFrame) -> any:
         )
     )
 
-    return fig
+    return dcc.Graph(id="weekly-violin-plot", figure=fig)
 
 
 """
@@ -201,4 +203,4 @@ def getDailyLinePlot(df: pd.DataFrame) -> any:
         )
     )
 
-    return fig
+    return dcc.Graph(id="daily-line-plot", figure=fig)
