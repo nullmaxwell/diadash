@@ -119,6 +119,15 @@ coverage-html:
 dash:
 	$(PYTHON_INTERPRETER) src/dash/index.py
 
+docker-dev:
+	docker compose up
+
+docker-prod:
+	docker compose up -d
+
+docker-remove:
+	docker rmi -f diadash:latest
+
 #################################################################################
 # Project Rules                                                                 #
 #################################################################################

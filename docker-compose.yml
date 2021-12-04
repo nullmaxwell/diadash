@@ -1,0 +1,13 @@
+version: "3.9.7"
+services:
+  app-name:
+    build:
+      context: .
+    image: diadash:latest
+    container_name: diadash
+    ports:
+      - "8050:8050"
+    environment:
+      - PYTHON_INTERPRETER=python3
+      - TARGET=LIVE
+    restart: unless-stopped
