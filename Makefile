@@ -115,17 +115,22 @@ coverage-html:
 # Project Specific Commands                                                     #
 #################################################################################
 
-## Sample Commond
+## Spins up development server of Diadash
 dash:
+	make clean
 	$(PYTHON_INTERPRETER) src/dash/index.py
 
+## Compose Docker image and spin up container with that image.
 docker-dev:
 	docker compose up
 
+## Compose Docker image and spin up a detached container with that image.
 docker-prod:
 	docker compose up -d
 
+## Kill the Diadash container and remove the image from Docker.
 docker-remove:
+	docker kill diadash:latest
 	docker rmi -f diadash:latest
 
 #################################################################################

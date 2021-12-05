@@ -21,27 +21,48 @@ First and foremost, while this data is sourced directly from Medtronic's CareLin
 
 - **Projected A1C** - The metric card containing projected A1C is not an accurate estimation or representation of true A1C given that only 7 days of blood glucose data is available. It is only a representation of an A1C value of the previous 7 days and is intended to show the user a projection of an A1C value should the previous 7 days be characteristic of the next 3 months.
 
-## Getting Started
-This project assumes that you have pyenv and FireFox's GeckoDriver installed.
-
-In the future I intend to implement a Dockerfile for deployment.
-
-If you would like to create a pyenv environment you can do so with `make create_environment`. 
-To then initialize that environment you may use `make init_environment`. 
-Please note that this is completely optional.
-
 --------
 ### Prerequisites
 - Gecko Driver - Ensure `geckodriver` is installed with `geckodriver -V`
 - Dependencies - To install dependencies run `make requirements`.
 
 --------
-## Usage
-Desired flow (to be completed):
-1. Launch the app with Docker
-2. Navigate to URL
-3. Provide Medtronic Credentials
-4. View Dashboard
+## Getting Started
+
+### Local Testing
+**Prerequisites**
+If you are using a local virtual environment for Python, this project assumes that you have pyenv and FireFox's GeckoDriver installed. 
+
+You can check  `geckodriver` is installed with `geckodriver -V`
+
+Creating a virtual environment with pyenv (optional): 
+1. Use  `make create_environment` to create the environment.
+2. Use `make init_environment` initialize the environment and get into its shell.
+3. Use `make requirements` to install all dependencies.
+4. Use `make dash` to spin up the Dash app at [`localhost:8050`](localhost:8050).
+
+**Uninstall/Cleanup**
+You can remove the virtual environment completely with `make remove_environment`.
+
+
+### Docker
+This is the preferred development and deployment method of this project.
+
+To compose the Diadash Docker image and spin up a *detached* container using that image use:
+```
+make docker-prod
+```
+
+Alternatively, you can spin up a development container with:
+```
+make docker-dev
+```
+
+Either command will make the application available at [`localhost:8050`](localhost:8050).
+
+**Uninstall/Cleanup**
+To remove the container and image produced with the above commands you can use: `make docker-remove`.
+
 
 ## Screenshots
 ![Login Page](docs/images/login.png)
@@ -50,12 +71,10 @@ Desired flow (to be completed):
 ![Main Dashboard - Daily Overview](docs/images/main_do.png)
 ![Main Dashboard - Other Overall Distribution](docs/images/main_ood.png) 
 ![Main Dashboard - Other Carb and Insulin Intake](docs/images/main_oi.png) 
-
-
 *WIP
 
 ## To Do
-- Make Dockerfile
+- Ensure that Geckodriver is working correctly with Docker.
 
 --------
 
